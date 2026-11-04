@@ -48,9 +48,13 @@ To strictly preserve student privacy, this project does not use real academic da
 Team Ctrl+Z Burnout
 
 [**Toka Nasr**](https://github.com/TokaElfawey)
+
 [**ِAya Nassser**](https://github.com/ayaah-ahmed)
+
 [**Toka Alaa**](https://github.com/toka-alaa)
+
 [**Mohamed Mostafa**](https://github.com/mohamed291133)
+
 [**YousifHisham**](https://github.com/YousifHisham-tech)
 
 Developed as part of the Human-AI Interaction coursework.
