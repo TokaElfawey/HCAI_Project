@@ -55,6 +55,6 @@ Team Ctrl+Z Burnout
 
 [**Mohamed Mostafa**](https://github.com/mohamed291133)
 
-[**YousifHisham**](https://github.com/YousifHisham-tech)
+[**Yousif Hisham**](https://github.com/YousifHisham-tech)
 
 Developed as part of the Human-AI Interaction coursework.
