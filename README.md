@@ -47,12 +47,12 @@ To strictly preserve student privacy, this project does not use real academic da
 
 Team Ctrl+Z Burnout
 
-https://github.com/ayaah-ahmed
+ayaah-ahmed
 
-https://github.com/toka-alaa
+toka-alaa
 
-https://github.com/mohamed291133
+mohamed291133
 
-https://github.com/YousifHisham-tech
+YousifHisham-tech
 
 Developed as part of the Human-AI Interaction coursework.
