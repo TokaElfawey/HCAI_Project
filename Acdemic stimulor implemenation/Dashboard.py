@@ -2,6 +2,7 @@ import os
 import streamlit as st
 from academic_decision_simulator import AcademicDecisionSimulator
 from gemini_llm import GeminiLLM
+from project_theme import apply_project_theme
 def load_environment_file():
     env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
     try:
@@ -31,6 +32,7 @@ def load_environment_file():
 def main():
     st.set_page_config(page_title="Academic Decision Simulator", page_icon="🎓", layout="wide")
     load_environment_file()
+    apply_project_theme()
     st.title("🎓 Academic Decision Simulator")
     st.caption("Team Ctrl+Z Burnout · You stay in control: every draft is a proposal, never a decision.")
     system_prompt = """

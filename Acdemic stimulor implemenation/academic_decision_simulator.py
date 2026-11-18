@@ -7,6 +7,8 @@ import uuid
 from datetime import datetime
 import streamlit as st
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from course_planner import CoursePlanner
+from project_theme import THEMES
 class AcademicDecisionSimulator:
     DAYS = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     def __init__(self, llm, system_prompt, start_hour=8, end_hour=22, state_key="academic_simulator"):
@@ -17,6 +19,7 @@ class AcademicDecisionSimulator:
         self.start_hour = start_hour
         self.end_hour = end_hour
         self.state_key = state_key
+        self.course_planner = CoursePlanner(state_key=f"{state_key}_planner")
         self.schedule_key = f"{state_key}_schedule"
         self.messages_key = f"{state_key}_messages"
         data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
@@ -223,6 +226,7 @@ class AcademicDecisionSimulator:
     # ======================================================
     def _generate_schedule_html(self):
         schedule = st.session_state[self.schedule_key]
+        palette = THEMES.get(st.session_state.get("academic_theme", "Calm Blue"), THEMES["Calm Blue"])
         hours = range(self.start_hour, self.end_hour)
         table_html = []
         # CSS
@@ -233,7 +237,9 @@ class AcademicDecisionSimulator:
                 max-width: 100%;
                 overflow-x: auto;
                 margin-top: 15px;
-                border-radius: 10px;
+                border: 1.5px solid __BORDER__;
+                border-radius: 16px;
+                background-color: __SURFACE__;
             }
             .schedule-table {
                 width: max-content;
@@ -241,19 +247,21 @@ class AcademicDecisionSimulator:
                 border-collapse: collapse;
                 table-layout: fixed;
                 text-align: center;
-                font-family: Arial, sans-serif;
+                font-family: 'Atkinson Hyperlegible', 'Segoe UI', Verdana, sans-serif;
+                color: __TEXT__;
             }
             .schedule-table th,
             .schedule-table td {
-                border: 1px solid #64748b;
-                padding: 10px 6px;
+                border: 1px solid __BORDER__;
+                padding: 12px 8px;
                 min-width: 78px;
-                height: 65px;
-                font-size: 12px;
+                height: 72px;
+                font-size: 0.9rem;
+                line-height: 1.4;
             }
             .schedule-table th {
-                background-color: #334155;
-                color: white;
+                background-color: __TINT_H__;
+                color: __TEXT__;
                 font-weight: bold;
                 white-space: nowrap;
             }
@@ -262,26 +270,27 @@ class AcademicDecisionSimulator:
                 width: 110px;
             }
             .schedule-table .day-name {
-                background-color: #475569;
-                color: white;
+                background-color: __TINT__;
+                color: __TEXT__;
                 font-weight: bold;
                 min-width: 110px;
             }
             .schedule-table .empty-cell {
-                background-color: #f1f5f9;
+                background-color: __SURFACE__;
             }
             .schedule-table .work-cell {
-                background-color: #bfdbfe;
-                color: #1e3a8a;
+                background-color: __USER__;
+                color: __TEXT__;
                 font-weight: bold;
-                border: 2px solid #3b82f6;
+                border: 2px solid __ACCENT__;
                 overflow-wrap: anywhere;
             }
             .schedule-table .work-cell small {
                 display: block;
-                margin-top: 5px;
+                margin-top: 6px;
                 font-weight: normal;
-                font-size: 10px;
+                font-size: 0.8rem;
+                line-height: 1.4;
             }
         </style>
         <div class="schedule-wrapper">
@@ -289,7 +298,7 @@ class AcademicDecisionSimulator:
                 <thead>
                     <tr>
                         <th class="day-column">Day</th>
-        """)
+        """.replace("__BORDER__", palette["border"]).replace("__SURFACE__", palette["surface"]).replace("__TEXT__", palette["text"]).replace("__TINT_H__", palette["tint_h"]).replace("__TINT__", palette["tint"]).replace("__USER__", palette["user"]).replace("__ACCENT__", palette["accent"]))
         # Create hourly headers
         for hour in hours:
             next_hour = hour + 1
@@ -863,12 +872,14 @@ Instructions:
     def render(self):
         page = st.segmented_control(
             "Academic simulator page",
-            ["📊 Dashboard", "💬 Chatbot"],
+            ["📊 Dashboard", "📚 Course Planner", "💬 Chatbot"],
             default="📊 Dashboard",
             key=f"{self.state_key}_active_page",
             label_visibility="collapsed",
         )
         if page == "📊 Dashboard":
             self.render_dashboard()
+        elif page == "📚 Course Planner":
+            self.course_planner.render()
         elif page == "💬 Chatbot":
             self.render_chatbot()
