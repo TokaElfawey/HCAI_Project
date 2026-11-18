@@ -71,6 +71,21 @@ class DocumentWorkloadAnalyzer:
         return max(1, math.ceil((word_count / 1000) * (1 + diversity)))
 
     @staticmethod
+    def to_readable_text(text):
+        """Remove extraction-only markup while preserving the document wording."""
+        if not isinstance(text, str):
+            return ""
+        text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
+        text = re.sub(r"^#{1,6}\s*", "", text, flags=re.MULTILINE)
+        text = re.sub(r"(?m)^\s*\|(?:[-:\s|]+)\|\s*$", "", text)
+        text = text.replace("|", " ")
+        text = re.sub(r"\*\*([^*]+)\*\*", r"\1", text)
+        text = re.sub(r"\*([^*]+)\*", r"\1", text)
+        text = re.sub(r"<[^>]+>", "", text)
+        text = re.sub(r"\n{3,}", "\n\n", text)
+        return text.strip()
+
+    @staticmethod
     def read_document_text(file_bytes, filename):
         if not isinstance(file_bytes, bytes) or not file_bytes:
             raise ValueError("The uploaded document is empty.")
@@ -138,7 +153,9 @@ class DocumentWorkloadAnalyzer:
                 stream=io.BytesIO(file_bytes),
             )
             document = converter.convert(source).document
-        text = document.export_to_markdown()
+        text = DocumentWorkloadAnalyzer.to_readable_text(
+            document.export_to_markdown()
+        )
         if not text.strip():
             raise ValueError("No readable text was found in the uploaded document.")
         return text
@@ -175,6 +192,24 @@ class DocumentWorkloadAnalyzer:
             ],
         )
         return len(chunks)
+
+    def delete_embeddings(self, document_id=None, filename=None):
+        if document_id:
+            where = {"document_id": document_id}
+        elif filename:
+            where = {"filename": Path(filename).name}
+        else:
+            raise ValueError("Provide a document ID or filename to delete.")
+
+        chromadb = self._load_chromadb()
+        collection = chromadb.PersistentClient(path=str(self.chroma_path)).get_or_create_collection(
+            name="course_materials",
+            metadata={"hnsw:space": "cosine"},
+        )
+        matching_ids = collection.get(where=where, include=[])["ids"]
+        if matching_ids:
+            collection.delete(ids=matching_ids)
+        return len(matching_ids)
 
     def analyze(self, file_bytes, filename):
         if not isinstance(file_bytes, bytes) or not file_bytes:

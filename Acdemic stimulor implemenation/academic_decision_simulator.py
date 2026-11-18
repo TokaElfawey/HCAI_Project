@@ -1,3 +1,4 @@
+import copy
 import html
 import json
 import math
@@ -441,6 +442,10 @@ CURRENT STUDENT SCHEDULE:
 {self.get_schedule_context()}
 Instructions:
 - Use the current schedule when answering questions.
+- Only add a study session to a slot that is shown as free in CURRENT STUDENT SCHEDULE.
+- Never add an activity over an existing activity. Use update to move or resize an
+  existing activity, or remove it before adding a replacement in the same proposal.
+- Check every operation against the final schedule after all removes and updates.
 - When uploaded course material includes a workload estimate and the user wants a study plan,
   propose study sessions whose total time is guided by that estimate.
 - Spread study sessions across the student's available week ({study_days}),
@@ -722,12 +727,56 @@ Instructions:
                 st.rerun()
         messages = st.session_state[self.messages_key]
         # Display conversation history
-        for message in messages:
+        for message_index, message in enumerate(messages):
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
-                for document in message.get("documents", []):
+                for document_index, document in enumerate(message.get("documents", [])):
                     with st.expander(f"OCR text: {document['filename']}"):
-                        st.text(document["text"])
+                        st.text_area(
+                            "Extracted document text",
+                            value=document["text"],
+                            height=320,
+                            disabled=True,
+                            label_visibility="collapsed",
+                        )
+                        document_key = document.get("document_id") or f"{message_index}_{document_index}"
+                        if st.button(
+                            "Delete material and embeddings",
+                            key=f"{self.state_key}_delete_material_{document_key}",
+                            type="secondary",
+                        ):
+                            from document_workload_analyzer import DocumentWorkloadAnalyzer
+                            analyzer = DocumentWorkloadAnalyzer()
+                            deleted_vectors = analyzer.delete_embeddings(
+                                document_id=document.get("document_id"),
+                                filename=document["filename"],
+                            )
+                            updated_messages = copy.deepcopy(messages)
+                            for stored_message in updated_messages:
+                                stored_documents = stored_message.get("documents")
+                                if not stored_documents:
+                                    continue
+                                if document.get("document_id"):
+                                    stored_documents = [
+                                        stored_document for stored_document in stored_documents
+                                        if stored_document.get("document_id") != document["document_id"]
+                                    ]
+                                else:
+                                    stored_documents = [
+                                        stored_document for stored_document in stored_documents
+                                        if stored_document.get("filename") != document["filename"]
+                                    ]
+                                if stored_documents:
+                                    stored_message["documents"] = stored_documents
+                                else:
+                                    stored_message.pop("documents", None)
+                            self._save_json(self.messages_file, updated_messages)
+                            st.session_state[self.messages_key] = updated_messages
+                            st.success(
+                                f"Deleted {document['filename']} and "
+                                f"{deleted_vectors} stored embedding(s)."
+                            )
+                            st.rerun()
                 self._render_schedule_proposal(message)
         # Chat input
         submission = st.chat_input(
@@ -756,6 +805,7 @@ Instructions:
                             )
                             documents.append({
                                 "filename": uploaded_file.name,
+                                "document_id": analysis.document_id,
                                 "text": analysis.extracted_text,
                                 "workload": {
                                     "word_count": analysis.word_count,
@@ -797,7 +847,13 @@ Instructions:
                         f"{workload['stored_vectors']} chunk embeddings saved in Chroma."
                     )
                     with st.expander(f"OCR text: {document['filename']}"):
-                        st.text(document["text"])
+                        st.text_area(
+                            "Extracted document text",
+                            value=document["text"],
+                            height=320,
+                            disabled=True,
+                            label_visibility="collapsed",
+                        )
             if self.llm is None:
                 if documents:
                     messages.append(self._create_local_workload_schedule_response(documents))

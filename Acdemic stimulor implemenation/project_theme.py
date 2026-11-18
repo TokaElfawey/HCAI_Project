@@ -173,6 +173,15 @@ def apply_project_theme():
         line-height: 1.5;
         min-height: 46px;
     }
+    .stApp [data-testid="stTextAreaRootElement"],
+    .stApp [data-testid="stTextAreaRootElement"] textarea,
+    .stApp [data-testid="stTextArea"] [data-baseweb="textarea"],
+    .stApp [data-testid="stTextArea"] textarea:disabled {
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        background: #FFFFFF !important;
+        opacity: 1 !important;
+    }
     .stApp [data-baseweb="input"],
     .stApp [data-baseweb="base-input"] {
         background: var(--surface) !important;
@@ -221,6 +230,16 @@ def apply_project_theme():
     .stApp [data-testid="stChatMessage"] code {
         color: var(--text) !important;
         background: var(--tint) !important;
+    }
+    .stApp [data-testid="stChatMessage"] [data-testid="stAlertContainer"] {
+        color: var(--text) !important;
+        background: var(--surface) !important;
+        border: var(--border-width) solid var(--border) !important;
+        opacity: 1 !important;
+    }
+    .stApp [data-testid="stChatMessage"] [data-testid="stAlertContainer"] * {
+        color: var(--text) !important;
+        opacity: 1 !important;
     }
     .stApp [data-testid="stChatInput"] textarea::placeholder {
         color: var(--muted) !important;
