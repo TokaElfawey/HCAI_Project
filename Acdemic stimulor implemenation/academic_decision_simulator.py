@@ -149,6 +149,75 @@ class AcademicDecisionSimulator:
         if success:
             self._save_schedule()
         return success, message
+    def _find_work_index(self, schedule, workname, day, start_time):
+        workname = str(workname or "").strip()
+        if not workname:
+            return None, "Work name cannot be empty."
+        try:
+            parsed_time = datetime.strptime(start_time, "%H:%M")
+            if parsed_time.minute != 0:
+                return None, "Invalid start time."
+            start_hour = parsed_time.hour
+        except (ValueError, TypeError):
+            return None, "Invalid start time."
+        day_lookup = {item.lower(): item for item in self.DAYS}
+        day = day_lookup.get(str(day).strip().lower())
+        if day is None:
+            return None, "Invalid day."
+        for index, item in enumerate(schedule):
+            if item["workname"] == workname and item["day"] == day and item["start_hour"] == start_hour:
+                return index, None
+        return None, "Work was not found."
+    def _update_work_in_schedule(
+        self,
+        schedule,
+        workname,
+        day,
+        start_time,
+        new_day=None,
+        new_start_time=None,
+        duration_hours=None,
+    ):
+        if new_day is None and new_start_time is None and duration_hours is None:
+            return False, "Provide at least one new day, start time, or duration."
+        index, error = self._find_work_index(schedule, workname, day, start_time)
+        if error:
+            return False, error
+        existing = schedule[index]
+        updated_schedule = [dict(item) for item in schedule]
+        updated_schedule.pop(index)
+        success, message = self._add_work_to_schedule(
+            updated_schedule,
+            workname,
+            existing["duration_hours"] if duration_hours is None else duration_hours,
+            existing["day"] if new_day is None else new_day,
+            f"{existing['start_hour']:02d}:00" if new_start_time is None else new_start_time,
+        )
+        if not success:
+            return False, message
+        schedule[:] = updated_schedule
+        return True, f"{workname} updated successfully."
+    def update_work(
+        self,
+        workname,
+        day,
+        start_time,
+        new_day=None,
+        new_start_time=None,
+        duration_hours=None,
+    ):
+        success, message = self._update_work_in_schedule(
+            st.session_state[self.schedule_key],
+            workname,
+            day,
+            start_time,
+            new_day=new_day,
+            new_start_time=new_start_time,
+            duration_hours=duration_hours,
+        )
+        if success:
+            self._save_schedule()
+        return success, message
     # ======================================================
     # 3. GENERATE SCHEDULE HTML
     # ======================================================
@@ -356,12 +425,18 @@ class AcademicDecisionSimulator:
         return "\n".join(lines)
     # ------------------------------------------------------
     def _build_system_prompt(self):
+        study_days = ", ".join(self.DAYS)
         return f"""
 {self.system_prompt}
 CURRENT STUDENT SCHEDULE:
 {self.get_schedule_context()}
 Instructions:
 - Use the current schedule when answering questions.
+- When uploaded course material includes a workload estimate and the user wants a study plan,
+  propose study sessions whose total time is guided by that estimate.
+- Spread study sessions across the student's available week ({study_days}),
+  between {self.start_hour:02d}:00 and {self.end_hour:02d}:00. Avoid existing activities.
+- Treat the workload estimate as approximate and explain that the student can adjust it.
 - Do not invent scheduled activities.
 - Do not claim that an activity was added or removed
   unless the backend actually performs that action.
@@ -370,13 +445,20 @@ Instructions:
   proposal at the end of your response in this exact format:
   <schedule_suggestion>
   {{"reason":"short explanation","operations":[
-    {{"action":"add","workname":"Activity","day":"Monday","start_time":"10:00","duration_hours":1}}
+    {{"action":"add","workname":"Activity","day":"Monday","start_time":"10:00","duration_hours":1}},
+    {{"action":"update","workname":"Existing Activity","day":"Monday","start_time":"09:00","new_start_time":"10:00"}}
   ]}}
   </schedule_suggestion>
-- Operations may use action "add" or "remove". A remove operation must include
-  workname, day, and start_time. Do not include an operation unless the user
-  asked for a schedule change or the suggestion is clearly useful. Never say
-  the schedule has changed; the student must accept the proposal first.
+- Operations may use action "add", "remove", or "update". For "remove" and
+  "update", workname, day, and start_time identify the existing activity.
+  An update may include new_day, new_start_time, and/or duration_hours; omitted
+  fields keep their current values. Use update rather than remove-plus-add when
+  moving or resizing an existing course. Put related updates in the same
+  proposal when they resolve conflicts with each other's old time slots; the
+  backend applies the complete proposal atomically.
+- Do not include an operation unless the user asked for a schedule change or
+  the suggestion is clearly useful. Never say the schedule has changed; the
+  student must accept the proposal first.
 """
     # ======================================================
     # 6. CHATBOT
@@ -400,8 +482,8 @@ Instructions:
                 if not isinstance(operation, dict):
                     raise ValueError("Each schedule change must be an object.")
                 action = operation.get("action")
-                if action not in ("add", "remove"):
-                    raise ValueError("Each change must use action add or remove.")
+                if action not in ("add", "remove", "update"):
+                    raise ValueError("Each change must use action add, remove, or update.")
                 for field in ("workname", "day", "start_time"):
                     if not isinstance(operation.get(field), str) or not operation[field].strip():
                         raise ValueError(f"Each change must include a valid {field}.")
@@ -410,6 +492,17 @@ Instructions:
                     if "duration_hours" not in operation:
                         raise ValueError("An add change must include duration_hours.")
                     normalized["duration_hours"] = operation.get("duration_hours")
+                elif action == "update":
+                    update_fields = ("new_day", "new_start_time", "duration_hours")
+                    if not any(field in operation for field in update_fields):
+                        raise ValueError("An update must include at least one new schedule value.")
+                    for field in ("new_day", "new_start_time"):
+                        if field in operation:
+                            if not isinstance(operation[field], str) or not operation[field].strip():
+                                raise ValueError(f"An update must include a valid {field}.")
+                            normalized[field] = operation[field].strip()
+                    if "duration_hours" in operation:
+                        normalized["duration_hours"] = operation["duration_hours"]
                 normalized_operations.append(normalized)
             proposal = {"id": uuid.uuid4().hex, "reason": str(suggestion.get("reason", "")).strip(), "operations": normalized_operations, "status": "pending"}
             _, validation_error = self._proposed_schedule(proposal["operations"])
@@ -420,11 +513,53 @@ Instructions:
             return visible_reply, None, str(error)
     def _proposed_schedule(self, operations):
         proposed = [dict(activity) for activity in st.session_state[self.schedule_key]]
-        for operation in operations:
+        resolved_updates = {}
+        for index, operation in enumerate(operations):
+            if operation["action"] == "remove":
+                success, message = self._remove_work_from_schedule(
+                    proposed,
+                    operation["workname"],
+                    operation["day"],
+                    operation["start_time"],
+                )
+                if not success:
+                    return None, message
+            elif operation["action"] == "update":
+                work_index, message = self._find_work_index(
+                    proposed,
+                    operation["workname"],
+                    operation["day"],
+                    operation["start_time"],
+                )
+                if message:
+                    return None, message
+                existing = proposed.pop(work_index)
+                resolved_updates[index] = {
+                    "workname": operation["workname"],
+                    "day": operation.get("new_day", existing["day"]),
+                    "start_time": operation.get(
+                        "new_start_time",
+                        f"{existing['start_hour']:02d}:00",
+                    ),
+                    "duration_hours": operation.get(
+                        "duration_hours",
+                        existing["duration_hours"],
+                    ),
+                }
+        for index, operation in enumerate(operations):
             if operation["action"] == "add":
                 success, message = self._add_work_to_schedule(proposed, operation["workname"], operation["duration_hours"], operation["day"], operation["start_time"])
+            elif operation["action"] == "update":
+                update = resolved_updates[index]
+                success, message = self._add_work_to_schedule(
+                    proposed,
+                    update["workname"],
+                    update["duration_hours"],
+                    update["day"],
+                    update["start_time"],
+                )
             else:
-                success, message = self._remove_work_from_schedule(proposed, operation["workname"], operation["day"], operation["start_time"])
+                continue
             if not success:
                 return None, message
         return proposed, None
@@ -450,8 +585,25 @@ Instructions:
                 if operation["action"] == "add":
                     end_hour = int(start[:2]) + int(operation["duration_hours"])
                     details = f"{operation['workname']} | {operation['day']} | " f"{start}-{end_hour:02d}:00 " f"({operation['duration_hours']} hour(s))"
-                else:
+                elif operation["action"] == "remove":
                     details = f"{operation['workname']} | {operation['day']} | {start}"
+                else:
+                    work_index, _ = self._find_work_index(
+                        st.session_state[self.schedule_key],
+                        operation["workname"],
+                        operation["day"],
+                        operation["start_time"],
+                    )
+                    duration = operation.get("duration_hours")
+                    if duration is None and work_index is not None:
+                        duration = st.session_state[self.schedule_key][work_index]["duration_hours"]
+                    new_day = operation.get("new_day", operation["day"])
+                    new_start = operation.get("new_start_time", operation["start_time"])
+                    duration_details = f" ({duration} hour(s))" if duration is not None else ""
+                    details = (
+                        f"{operation['workname']} | {operation['day']} {operation['start_time']} "
+                        f"→ {new_day} {new_start}{duration_details}"
+                    )
                 st.markdown(f"- **{action}:** {details}")
             if validation_error:
                 st.warning(f"This proposal no longer fits the schedule: {validation_error}")
@@ -470,6 +622,86 @@ Instructions:
             proposal["status"] = "cancelled"
             self._save_messages()
             st.rerun()
+    def _create_local_workload_schedule_response(self, documents):
+        estimated_hours = sum(document["workload"]["estimated_hours"] for document in documents)
+        scheduled = st.session_state[self.schedule_key]
+        file_names = [document["filename"] for document in documents]
+        file_label = file_names[0] if len(file_names) == 1 else f"{file_names[0]} and {len(file_names) - 1} more"
+        workname = f"Study: {file_label}"[:80]
+        occupied = {day: set() for day in self.DAYS}
+        for activity in scheduled:
+            for hour in range(activity["start_hour"], activity["start_hour"] + activity["duration_hours"]):
+                occupied[activity["day"]].add(hour)
+
+        daily_blocks = {}
+        for day in self.DAYS:
+            blocks = []
+            hour = self.start_hour
+            while hour < self.end_hour:
+                if hour in occupied[day]:
+                    hour += 1
+                    continue
+                start = hour
+                while hour < self.end_hour and hour not in occupied[day] and hour - start < 2:
+                    hour += 1
+                blocks.append((start, hour - start))
+            daily_blocks[day] = blocks
+
+        available_hours = sum(duration for blocks in daily_blocks.values() for _, duration in blocks)
+        remaining_hours = estimated_hours
+        operations = []
+        block_round = 0
+        while remaining_hours > 0 and len(operations) < 20:
+            added_block = False
+            for day in self.DAYS:
+                if block_round >= len(daily_blocks[day]) or remaining_hours <= 0 or len(operations) >= 20:
+                    continue
+                start, block_hours = daily_blocks[day][block_round]
+                duration = min(block_hours, remaining_hours)
+                operations.append({
+                    "action": "add",
+                    "workname": workname,
+                    "day": day,
+                    "start_time": f"{start:02d}:00",
+                    "duration_hours": duration,
+                })
+                remaining_hours -= duration
+                added_block = True
+            if not added_block:
+                break
+            block_round += 1
+
+        if not operations:
+            return {
+                "role": "assistant",
+                "content": (
+                    f"The uploaded material is estimated to need {estimated_hours} study hours, "
+                    "but there are no open timetable slots for a study proposal."
+                ),
+            }
+
+        scheduled_hours = estimated_hours - remaining_hours
+        reason = (
+            f"The material is estimated at {estimated_hours} study hours. "
+            f"This draft schedules {scheduled_hours} hour(s) in available 1–2 hour sessions."
+        )
+        if remaining_hours:
+            reason += f" The remaining {remaining_hours} hour(s) do not fit in this week's available slots."
+        reason += f" Activity: {workname}."
+        suggestion_json = json.dumps({"reason": reason, "operations": operations})
+        draft = (
+            f"Based on the uploaded material, I estimate **{estimated_hours} study hours**. "
+            f"I drafted **{scheduled_hours} hour(s)** in the current timetable "
+            f"({available_hours} hour(s) are open this week). Review the proposal below; "
+            "it will only be added if you accept it."
+            f"\n<schedule_suggestion>{suggestion_json}</schedule_suggestion>"
+        )
+        visible_reply, proposal, suggestion_error = self._parse_schedule_suggestion(draft)
+        if suggestion_error or proposal is None:
+            raise RuntimeError(
+                f"Could not create a valid workload-based schedule proposal: {suggestion_error}"
+            )
+        return {"role": "assistant", "content": visible_reply, "proposal": proposal}
     def render_chatbot(self):
         st.header("💬 Academic Assistant")
         if st.button("🗑️ New Chat", key=f"{self.state_key}_new_chat", help="Delete saved chat history and start a blank conversation."):
@@ -484,16 +716,84 @@ Instructions:
         for message in messages:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
+                for document in message.get("documents", []):
+                    with st.expander(f"OCR text: {document['filename']}"):
+                        st.text(document["text"])
                 self._render_schedule_proposal(message)
         # Chat input
-        user_text = st.chat_input("Ask your academic assistant...", key=f"{self.state_key}_chat_input")
-        if user_text:
+        submission = st.chat_input(
+            "Ask about course material or attach a document...",
+            key=f"{self.state_key}_chat_input",
+            accept_file=True,
+            file_type=["pdf", "docx", "pptx"],
+        )
+        if submission:
+            if isinstance(submission, str):
+                user_text = submission.strip()
+                uploaded_files = []
+            else:
+                user_text = submission.text.strip()
+                uploaded_files = submission.files
+            documents = []
+            if uploaded_files:
+                try:
+                    from document_workload_analyzer import DocumentWorkloadAnalyzer
+                    analyzer = DocumentWorkloadAnalyzer()
+                    with st.spinner("Reading the material and calculating its workload..."):
+                        for uploaded_file in uploaded_files:
+                            analysis = analyzer.analyze(
+                                uploaded_file.getvalue(),
+                                uploaded_file.name,
+                            )
+                            documents.append({
+                                "filename": uploaded_file.name,
+                                "text": analysis.extracted_text,
+                                "workload": {
+                                    "word_count": analysis.word_count,
+                                    "chunks": analysis.chunks,
+                                    "topic_count": analysis.topic_count,
+                                    "diversity": analysis.diversity,
+                                    "estimated_hours": analysis.estimated_hours,
+                                    "stored_vectors": analysis.stored_vectors,
+                                    "topics": analysis.topics,
+                                },
+                            })
+                except (ImportError, OSError, RuntimeError, ValueError) as error:
+                    st.error(f"Could not analyze the uploaded material: {error}")
+                    return
+            if not user_text and documents:
+                user_text = (
+                    "Analyze this course material's workload and suggest study sessions "
+                    "on my weekly schedule based on it."
+                )
+            if not user_text and not documents:
+                return
             # Save user message
-            messages.append({"role": "user", "content": user_text})
+            user_message = {"role": "user", "content": user_text}
+            if documents:
+                user_message["documents"] = documents
+            messages.append(user_message)
             self._save_messages()
             with st.chat_message("user"):
                 st.markdown(user_text)
+                for document in documents:
+                    workload = document["workload"]
+                    st.info(
+                        f"Estimated study time: **{workload['estimated_hours']} hours** "
+                        f"· {workload['word_count']:,} words · "
+                        f"{workload['topic_count']} topic groups"
+                    )
+                    st.caption(
+                        f"Topic diversity: {workload['diversity']:.0%}. "
+                        f"{workload['stored_vectors']} chunk embeddings saved in Chroma."
+                    )
+                    with st.expander(f"OCR text: {document['filename']}"):
+                        st.text(document["text"])
             if self.llm is None:
+                if documents:
+                    messages.append(self._create_local_workload_schedule_response(documents))
+                    self._save_messages()
+                    st.rerun()
                 st.error("The chatbot is unavailable until GOOGLE_API_KEY is configured.")
                 return
             # Keep the last 20 messages as context
@@ -501,7 +801,26 @@ Instructions:
             chat_history = []
             for message in recent_messages:
                 if message["role"] == "user":
-                    chat_history.append(HumanMessage(content=message["content"]))
+                    content = message["content"]
+                    for document in message.get("documents", []):
+                        content += (
+                            f"\n\nOCR text from {document['filename']}:\n"
+                            f"{document['text']}"
+                        )
+                        workload = document.get("workload")
+                        if workload:
+                            topic_excerpts = "\n".join(
+                                f"- Topic {topic['topic']}: {topic['excerpt']}"
+                                for topic in workload["topics"]
+                            )
+                            content += (
+                                f"\n\nWorkload estimate: {workload['estimated_hours']} "
+                                f"study hours; {workload['word_count']} words; "
+                                f"{workload['topic_count']} topic groups; "
+                                f"diversity {workload['diversity']:.0%}.\n"
+                                f"Representative topics:\n{topic_excerpts}"
+                            )
+                    chat_history.append(HumanMessage(content=content))
                 elif message["role"] == "assistant":
                     chat_history.append(AIMessage(content=message["content"]))
             with st.chat_message("assistant"):
@@ -516,17 +835,40 @@ Instructions:
                             assistant_message["proposal"] = proposal
                         if suggestion_error:
                             assistant_message["suggestion_error"] = suggestion_error
+                        if documents:
+                            local_response = self._create_local_workload_schedule_response(documents)
+                            assistant_message["content"] = (
+                                f"{reply}\n\n{local_response['content']}"
+                            ).strip()
+                            assistant_message.pop("proposal", None)
+                            assistant_message.pop("suggestion_error", None)
+                            if "proposal" in local_response:
+                                assistant_message["proposal"] = local_response["proposal"]
                         messages.append(assistant_message)
                         self._save_messages()
                         st.rerun()
                     except Exception as error:
+                        if documents:
+                            st.warning(
+                                "The AI chatbot could not respond, so a local workload-based "
+                                "schedule proposal is shown instead."
+                            )
+                            messages.append(self._create_local_workload_schedule_response(documents))
+                            self._save_messages()
+                            st.rerun()
                         st.error(f"LLM error: {error}")
     # ======================================================
     # 7. MAIN WIDGET
     # ======================================================
     def render(self):
-        dashboard_tab, chatbot_tab = st.tabs(["📊 Dashboard", "💬 Chatbot"])
-        with dashboard_tab:
+        page = st.segmented_control(
+            "Academic simulator page",
+            ["📊 Dashboard", "💬 Chatbot"],
+            default="📊 Dashboard",
+            key=f"{self.state_key}_active_page",
+            label_visibility="collapsed",
+        )
+        if page == "📊 Dashboard":
             self.render_dashboard()
-        with chatbot_tab:
+        elif page == "💬 Chatbot":
             self.render_chatbot()

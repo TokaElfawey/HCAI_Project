@@ -54,10 +54,16 @@ def main():
             llm = GeminiLLM(api_key)
         except ImportError as error:
             llm = None
-            st.error(f"Install the Google GenAI SDK to enable chatbot replies: {error}")
+            st.warning(
+                f"Gemini replies are unavailable: {error}. "
+                "Uploaded material can still receive a local workload-based schedule proposal."
+            )
     else:
         llm = None
-        st.warning("Set the GOOGLE_API_KEY environment variable to enable chatbot replies.")
+        st.warning(
+            "Set GOOGLE_API_KEY to enable general chatbot replies. "
+            "Uploaded material can still receive a local workload-based schedule proposal."
+        )
     simulator = AcademicDecisionSimulator(llm=llm, system_prompt=system_prompt, start_hour=8, end_hour=22)
     if not os.path.exists(simulator.schedule_file):
         demo_activities = [("Machine Learning", 2, "Saturday", "10:00"), ("Deep Learning", 3, "Sunday", "12:00"), ("Computer Vision", 2, "Monday", "14:00"), ("Data Structures", 1, "Wednesday", "09:00"), ("Python", 2, "Thursday", "16:00")]
