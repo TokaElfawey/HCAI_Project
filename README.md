@@ -1,47 +1,106 @@
 🎓 Academic Decision Simulator
 
-Team: Ctrl+Z Burnout
-Core HAI Principle: User Control and Agency
+Team Ctrl+Z Burnout · Human-Centered AI (HCAI) course project Core HAI principle: User Control and Agency
 
-📖 Overview
+The Academic Decision Simulator helps university students explore course plans and weekly schedules without being told what to do. It creates drafts, explains them, and lets the student reject, lock, edit and undo anything. Nothing is final without the student's confirmation, and anything outside the tool's limits goes to a human Academic Advisor.
 
-The Academic Decision Simulator is an AI-powered advising tool designed to help university students build balanced, stress-free course schedules. Unlike traditional AI planners that dictate a final schedule, our simulator acts as a transparent advisor. It proposes options, explains its reasoning, and places the final decision-making power entirely in the hands of the student.
+Who it is for
+Persona	Need	How the product helps
+Lucía, commuter with ADHD	Fewer decisions at once, safe to experiment	Lock limits such as "no 8 AM", reject courses, Undo and Redo, one draft at a time
+Samuel, student with dyslexia	Clear, short, readable screens	Colour themes, dyslexia-friendly font and spacing, plain labels, visible limits
+Nour, senior international student	Trust, verifiable reasons, strict requirements	Prerequisite checks, "Why this course?", advisor handover for exceptions
+Features
+#	Feature	Ladder level
+1	Constraints dashboard (credits, time, reading load) and one-click persona presets	1. Inform
+2	Three-stage onboarding and an "It can / It cannot" panel	1. Inform
+3	Human advisor handover for requests over 18 credits	1. Inform
+4	Prerequisite check and "Why this course?" explanations	2. Explain
+5	Up to three draft plans with Lock, Reject and Restore	3. Allow control
+6	Undo and Redo (history of up to 50 steps)	3. Allow control
+7	Weekly schedule with AI proposals that apply only after Accept	3. Allow control
+8	Display options: colour themes (including High Contrast and Warm Cream) and dyslexia-friendly mode	1. Inform
 
-This project was built with accessibility and cognitive load in mind, specifically catering to students with interaction preferences like Dyslexia and ADHD, as well as students managing complex international or scholarship requirements.
+The levels come from our HAI Principle Ladder v1 (Week 4): 1 Inform → 2 Explain → 3 Allow control → 4 Enable feedback.
 
-🎯 Core Principle: User Control and Agency
+Document analysis: uploaded course material (PDF or images) is read with OCR, its workload is estimated, and a study-session schedule is proposed, never applied automatically.
 
-Our guiding philosophy is that the AI is an advisor, not a dictator. The system never auto-saves and never forces a choice. It allows the user to safely explore the consequences of their academic decisions.
+Safety rules
+The assistant is a simulator, not an academic advisor.
+It never invents courses or prerequisites. Plans come only from the course catalog.
+It does not approve credit overloads (more than 18 credits), prerequisite waivers or exceptions. These go to a human Academic Advisor.
+AI-suggested schedule changes stay pending until the student accepts them.
+Use fictional or synthetic data only. Do not upload real personal documents.
+Getting started
+1. Requirements
+Python 3.10 or newer (recommended)
+A Google Gemini API key (optional, see below)
+Internet access on the first run (OCR and embedding models are downloaded)
+2. Install
+bash
+git clone https://github.com/TokaElfawey/HCAI_Project.git
+cd HCAI_Project/academic_simulator
+python -m venv .venv
+# Windows: .venv\Scripts\activate      macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
 
-✨ Key Features
+The requirements include torch, docling and sentence-transformers, so the first install can take several minutes. For NVIDIA GPU acceleration, install a CUDA-enabled PyTorch build.
 
-🎛️ Constraints Dashboard: Students set hard limits (e.g., "Max 15 hours/week", "No 8 AM classes") before the AI generates anything.
+3. Add your API key
 
-↩️ Universal Undo: Every action (changing a limit, rejecting a course) can be instantly reversed. Mistakes cost nothing, reducing decision anxiety.
+Create a file named .env inside the academic_simulator folder (next to Dashboard.py):
 
-❌ Granular Reject & Lock: Reject a single course instead of throwing away the whole draft, or "lock" a preferred constraint across regenerations.
+GOOGLE_API_KEY=your_key_here
 
-🔍 Explainability Tags: Every course recommendation includes a "Why this fits" tag and a clickable prerequisite path to ensure the AI's logic is verifiable.
+Never commit .env. You can copy .env.example as a starting point.
 
-🧠 Bounded Choices: Generates a maximum of 3 drafts at a time to prevent choice overload.
+Without a key, the course planner and weekly schedule still work. Only the general Gemini chat replies are unavailable. Uploaded material can still receive a local workload-based schedule proposal.
 
-🏗️ System Architecture
+4. Run
+bash
+streamlit run Dashboard.py
 
-Our tech stack is designed to ensure accurate grounding, state management (for the Undo feature), and a responsive UI.
+Open the address Streamlit prints (usually http://localhost:8501).
 
-Frontend Interface: Streamlit (Features custom CSS for accessibility, sliders, and session state management).
+Try it (suggested walkthrough)
+Follow the onboarding guide, then choose a student preset (Lucía, Samuel or Nour).
+Press Generate drafts. Open "Why this course?" on a course.
+Reject a course, then press Undo. Try Lock on another course.
+Raise the credit limit above 18 to see the advisor handover message.
+Open the weekly schedule. Ask the assistant for a change and choose Accept or Cancel.
+Switch the colour theme or dyslexia-friendly mode in the display options.
+Project structure
+HCAI_Project/
+├── README.md
+├── Ctrl+Z Burnout Week 2-5.pdf         # course deliverables
+└── academic_simulator/
+    ├── Dashboard.py                    # entry point (Streamlit)
+    ├── course_planner.py               # drafts, prerequisites, lock/reject, undo/redo, onboarding
+    ├── academic_decision_simulator.py  # weekly schedule, chat, AI proposals
+    ├── document_workload_analyzer.py   # OCR + workload estimate for course material
+    ├── gemini_llm.py                   # Gemini API wrapper
+    ├── project_theme.py                # colour themes and accessibility styling
+    ├── requirements.txt
+    └── data/
+        └── course_catalog.csv          # synthetic course catalog
 
-Orchestration: LangChain / LangGraph (Manages conversational flows and state checkpoints).
+Files created at run time (not committed): data/academic_simulator_chat.json, data/academic_simulator_schedule.json, data/course_material_chroma/.
 
-LLM Engine: Hosted LLM API (OpenAI / Gemini) set to low temperature for deterministic, JSON-structured reasoning.
+Course catalog columns
 
-Knowledge Base (RAG): Vector Database (Chroma/FAISS) querying our synthetic dataset to prevent AI hallucinations.
+course_id, course_name, department, credits, weekly_study_hours, prerequisites, schedule_slot, difficulty_level, reading_load, description
 
-Safeguards: Deterministic Rule Checker (Python scripts that strictly verify prerequisite math and credit limits before displaying to the user).
-
-📊 Dataset (SUCWD)
-
-To strictly preserve student privacy, this project does not use real academic data. We utilize the Synthetic University Course & Workload Dataset (SUCWD), a custom-generated dataset containing 120 synthetic courses and 2,000 mock student records, licensed under CC BY 4.0.
+Technology
+Interface: Streamlit with custom CSS (themes, accessibility styling) and session state for history
+LLM: Google Gemini through google-genai, wrapped to accept LangChain-style messages
+Rules: deterministic Python code checks prerequisites, limits and schedule overlaps. The LLM never decides these.
+Document analysis: Docling and RapidOCR for text extraction, sentence-transformers and ChromaDB for retrieval
+Current status
+✅ Course planner with drafts, prerequisite checks, Lock, Reject, Undo and Redo
+✅ Advisor handover over 18 credits
+✅ Weekly schedule with Accept / Cancel proposals
+✅ Document workload analysis
+✅ Colour themes and dyslexia-friendly mode
+🔜 Error reporting and draft rating with re-planning (Ladder level 4)
 
 👥 Contributors
 
