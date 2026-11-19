@@ -138,17 +138,6 @@ Files created at run time (not committed): `data/academic_simulator_chat.json`, 
 
 ---
 
-## Troubleshooting
-
-| Problem | What to do |
-|---|---|
-| "Set GOOGLE_API_KEY…" warning | Add `GOOGLE_API_KEY` to `.env` in the same folder as `Dashboard.py`, then restart |
-| Document analysis fails on first run | Check your internet connection (models download once), or install the optional Tesseract executable |
-| Import errors | Activate the virtual environment and run `pip install -r requirements.txt` again |
-| Old data keeps appearing | Delete the generated files in `data/` listed above |
-
----
-
 ## Team
 
 **Team Ctrl+Z Burnout**
