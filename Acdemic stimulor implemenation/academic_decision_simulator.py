@@ -8,6 +8,7 @@ import uuid
 from datetime import datetime
 import streamlit as st
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+import chat_guard
 from course_planner import CoursePlanner
 from project_theme import THEMES
 class AcademicDecisionSimulator:
@@ -434,12 +435,19 @@ class AcademicDecisionSimulator:
             lines.append(f"- {item['day']}: " f"{item['workname']} " f"from {start:02d}:00 to {end:02d}:00")
         return "\n".join(lines)
     # ------------------------------------------------------
-    def _build_system_prompt(self):
+    def _build_system_prompt(self, user_text=""):
         study_days = ", ".join(self.DAYS)
+        facts = chat_guard.catalog_context(user_text, self.course_planner.courses)
+        catalog_block = (
+            "COURSE CATALOG FACTS (the only source of truth about courses; if a course is not listed here "
+            "or the student's question needs data you do not have, say you cannot find it and suggest a human "
+            "Academic Advisor; never invent courses, prerequisites or hours):\n" + (facts or "(no specific course matched this message)")
+        )
         return f"""
 {self.system_prompt}
 CURRENT STUDENT SCHEDULE:
 {self.get_schedule_context()}
+{catalog_block}
 Instructions:
 - Use the current schedule when answering questions.
 - Only add a study session to a slot that is shown as free in CURRENT STUDENT SCHEDULE.
@@ -726,6 +734,14 @@ Instructions:
             else:
                 st.rerun()
         messages = st.session_state[self.messages_key]
+        pending_key = f"{self.state_key}_pending_prompt"
+        # Greeting (always first, not sent to the model) and quick replies
+        with st.chat_message("assistant"):
+            st.markdown(chat_guard.GREETING)
+            quick_columns = st.columns(len(chat_guard.QUICK_REPLIES))
+            for column, quick_text in zip(quick_columns, chat_guard.QUICK_REPLIES):
+                if column.button(quick_text, key=f"{self.state_key}_quick_{quick_text}", use_container_width=True):
+                    st.session_state[pending_key] = quick_text
         # Display conversation history
         for message_index, message in enumerate(messages):
             with st.chat_message(message["role"]):
@@ -785,6 +801,8 @@ Instructions:
             accept_file=True,
             file_type=["pdf", "docx", "pptx"],
         )
+        if not submission and st.session_state.get(pending_key):
+            submission = st.session_state.pop(pending_key)
         if submission:
             if isinstance(submission, str):
                 user_text = submission.strip()
@@ -854,13 +872,23 @@ Instructions:
                             disabled=True,
                             label_visibility="collapsed",
                         )
+            # Safeguards run first: unsafe, out-of-scope, overload / waiver (human handover), catalog lookups.
+            guard = None if documents else chat_guard.check(user_text, self.course_planner.courses)
+            if guard:
+                messages.append({"role": "assistant", "content": guard["reply"], "guard": guard["category"]})
+                self._save_messages()
+                st.rerun()
             if self.llm is None:
                 if documents:
                     messages.append(self._create_local_workload_schedule_response(documents))
                     self._save_messages()
                     st.rerun()
-                st.error("The chatbot is unavailable until GOOGLE_API_KEY is configured.")
-                return
+                messages.append({"role": "assistant", "content": (
+                    "I can't reach the AI model right now (no GOOGLE_API_KEY is set), so I can't answer open questions. "
+                    "I can still look up a course (try \"prerequisites of CS301\"), and the Course Planner page works fully. "
+                    "For anything else, please contact a human Academic Advisor."), "guard": "model_unavailable"})
+                self._save_messages()
+                st.rerun()
             # Keep the last 20 messages as context
             recent_messages = messages[-20:]
             chat_history = []
@@ -891,7 +919,7 @@ Instructions:
             with st.chat_message("assistant"):
                 with st.spinner("Thinking..."):
                     try:
-                        response = self.llm.invoke([SystemMessage(content=self._build_system_prompt())] + chat_history)
+                        response = self.llm.invoke([SystemMessage(content=self._build_system_prompt(user_text))] + chat_history)
                         reply = self.get_text(response.content)
                         reply, proposal, suggestion_error = self._parse_schedule_suggestion(reply)
                         # Save assistant response

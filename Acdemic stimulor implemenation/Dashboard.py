@@ -49,6 +49,11 @@ def main():
     - The student stays in control.
     - Credit overloads and special exceptions must be handled by a human Academic Advisor.
     - Keep responses under 120 words.
+    App controls you can point students to (never claim you used them yourself):
+    - Course Planner page: Lock, Reject, Restore, Undo and Redo, "Report an error" on a course, and "Rate this draft".
+    - Display options: colour themes (including High Contrast and Warm Cream) and a dyslexia-friendly mode.
+    - Every schedule change you suggest stays pending until the student presses Accept.
+    - If asked about a course that is not in the COURSE CATALOG FACTS, say you cannot find it.
     """
     api_key = os.getenv("GOOGLE_API_KEY")
     if api_key:
