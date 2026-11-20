@@ -30,7 +30,6 @@ The Academic Decision Simulator helps university students explore course plans a
 | 7 | Weekly schedule with AI proposals that apply only after **Accept** | 3. Allow control |
 | 8 | Display options: colour themes (including High Contrast and Warm Cream) and dyslexia-friendly mode | 1. Inform |
 | 9 | **Report an error** on any course and **Rate a draft**; the app re-plans (Undo reverses it) and logs the feedback | 4. Enable feedback |
-| 10 | Burnout-risk estimate and personal weekly-hours limit on every draft | 2. Explain |
 
 The levels come from our *HAI Principle Ladder v1* (Week 4): **1 Inform → 2 Explain → 3 Allow control → 4 Enable feedback**. All four levels are now built.
 
@@ -58,7 +57,7 @@ Document analysis: uploaded course material (PDF or images) is read with OCR, it
 ### 2. Install
 ```bash
 git clone https://github.com/TokaElfawey/HCAI_Project.git
-cd HCAI_Project/academic_simulator
+cd "HCAI_Project/Acdemic stimulor implemenation"
 python -m venv .venv
 # Windows: .venv\Scripts\activate      macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
@@ -66,16 +65,23 @@ pip install -r requirements.txt
 
 > The requirements include `torch`, `docling` and `sentence-transformers`, so the first install can take several minutes. For NVIDIA GPU acceleration, install a CUDA-enabled PyTorch build.
 
-### 3. Add your API key
-Create a file named `.env` **inside the `academic_simulator` folder** (next to `Dashboard.py`):
+### 3. The data (already included)
+The app reads four linked synthetic tables in `data/` (see `data/DATASHEET.md`). To regenerate them:
+```bash
+python data_generation/generate_sucwd.py          # same seed, same files
+python data_generation/generate_sucwd.py --seed 7 # a different synthetic university
+```
+
+### 4. Add your API key
+Create a file named `.env` **inside the `Acdemic stimulor implemenation` folder** (next to `Dashboard.py`):
 ```
 GOOGLE_API_KEY=your_key_here
 ```
-Never commit `.env`. You can copy `.env.example` as a starting point.
+Never commit `.env`.
 
 Without a key, the course planner and weekly schedule still work. Only the general Gemini chat replies are unavailable. Uploaded material can still receive a local workload-based schedule proposal.
 
-### 4. Run
+### 5. Run
 ```bash
 streamlit run Dashboard.py
 ```
@@ -94,6 +100,32 @@ Open the address Streamlit prints (usually http://localhost:8501).
 7. Open **Report an error with this course** on a course, send it, and watch the drafts rebuild. Then **Undo**.
 8. Open **Rate this draft**, choose "Too heavy" and send. The weekly-hours limit drops by 5 and the drafts are rebuilt.
 
+
+## Project structure
+
+```
+HCAI_Project/
+├── README.md
+├── Ctrl+Z Burnout Week 2.pdf ... Week 5.pdf   # course deliverables
+└── Acdemic stimulor implemenation/
+    ├── Dashboard.py                    # entry point (Streamlit)
+    ├── course_planner.py               # drafts, prerequisites, lock/reject, undo/redo, onboarding
+    ├── academic_decision_simulator.py  # weekly schedule, chat, AI proposals
+    ├── document_workload_analyzer.py   # OCR + workload estimate for course material
+    ├── gemini_llm.py                   # Gemini API wrapper
+    ├── project_theme.py                # colour themes and accessibility styling
+    ├── requirements.txt
+    ├── data_generation/
+    │   └── generate_sucwd.py           # builds the four SUCWD tables (standard library only)
+    └── data/
+        ├── DATASHEET.md                # what the data is, size, license
+        ├── course_catalog.csv          # 120 courses, 6 departments
+        ├── prerequisites.csv           # prerequisite / co-requisite links with either/or groups
+        ├── workload_estimates.csv      # low / typical / high weekly hours per component
+        └── student_terms.csv           # 2,000 generated student semesters (burnout estimate)
+```
+
+Files created at run time (not committed): `data/feedback_log.jsonl`, `data/academic_simulator_chat.json`, `data/academic_simulator_schedule.json`, `data/course_material_chroma/`.
 
 ### Course catalog columns
 `course_id, course_name, department, level, credits, terms_offered, weekly_study_hours, prerequisites, schedule_slot, difficulty_level, reading_load, description`
@@ -116,7 +148,7 @@ Open the address Streamlit prints (usually http://localhost:8501).
 - ✅ Weekly schedule with Accept / Cancel proposals
 - ✅ Document workload analysis
 - ✅ Colour themes and dyslexia-friendly mode
-- ✅ Synthetic SUCWD data (4 linked tables)
+- ✅ Synthetic SUCWD data (4 linked tables) with a generator script
 - ✅ Error reporting and draft rating with re-planning (Ladder level 4)
 
 ---
