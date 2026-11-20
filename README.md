@@ -66,14 +66,7 @@ pip install -r requirements.txt
 
 > The requirements include `torch`, `docling` and `sentence-transformers`, so the first install can take several minutes. For NVIDIA GPU acceleration, install a CUDA-enabled PyTorch build.
 
-### 3. The data (already included)
-The app reads four linked synthetic tables in `data/` (see `data/DATASHEET.md`). To regenerate them:
-```bash
-python data_generation/generate_sucwd.py          # same seed, same files
-python data_generation/generate_sucwd.py --seed 7 # a different synthetic university
-```
-
-### 4. Add your API key
+### 3. Add your API key
 Create a file named `.env` **inside the `academic_simulator` folder** (next to `Dashboard.py`):
 ```
 GOOGLE_API_KEY=your_key_here
@@ -82,7 +75,7 @@ Never commit `.env`. You can copy `.env.example` as a starting point.
 
 Without a key, the course planner and weekly schedule still work. Only the general Gemini chat replies are unavailable. Uploaded material can still receive a local workload-based schedule proposal.
 
-### 5. Run
+### 4. Run
 ```bash
 streamlit run Dashboard.py
 ```
@@ -101,41 +94,6 @@ Open the address Streamlit prints (usually http://localhost:8501).
 7. Open **Report an error with this course** on a course, send it, and watch the drafts rebuild. Then **Undo**.
 8. Open **Rate this draft**, choose "Too heavy" and send. The weekly-hours limit drops by 5 and the drafts are rebuilt.
 
-### Run the tests
-```bash
-python -m unittest discover -s tests -v
-```
-They check plan validity against the catalog (O1), Undo restoring state (O3), the share of overloaded drafts (O4) and the feedback loop.
-
----
-
-## Project structure
-
-```
-HCAI_Project/
-├── README.md
-├── Ctrl+Z Burnout Week 2-5.pdf         # course deliverables
-└── academic_simulator/
-    ├── Dashboard.py                    # entry point (Streamlit)
-    ├── course_planner.py               # drafts, prerequisites, lock/reject, undo/redo, onboarding
-    ├── academic_decision_simulator.py  # weekly schedule, chat, AI proposals
-    ├── document_workload_analyzer.py   # OCR + workload estimate for course material
-    ├── gemini_llm.py                   # Gemini API wrapper
-    ├── project_theme.py                # colour themes and accessibility styling
-    ├── requirements.txt
-    ├── data_generation/
-    │   └── generate_sucwd.py           # builds the four SUCWD tables (standard library only)
-    ├── tests/
-    │   └── test_planner.py             # rules, Undo and feedback tests
-    └── data/
-        ├── DATASHEET.md                # what the data is, size, license
-        ├── course_catalog.csv          # 120 courses, 6 departments
-        ├── prerequisites.csv           # prerequisite / co-requisite links with either/or groups
-        ├── workload_estimates.csv      # low / typical / high weekly hours per component
-        └── student_terms.csv           # 2,000 generated student semesters (burnout estimate)
-```
-
-Files created at run time (not committed): `data/feedback_log.jsonl`, `data/academic_simulator_chat.json`, `data/academic_simulator_schedule.json`, `data/course_material_chroma/`.
 
 ### Course catalog columns
 `course_id, course_name, department, level, credits, terms_offered, weekly_study_hours, prerequisites, schedule_slot, difficulty_level, reading_load, description`
@@ -158,7 +116,7 @@ Files created at run time (not committed): `data/feedback_log.jsonl`, `data/acad
 - ✅ Weekly schedule with Accept / Cancel proposals
 - ✅ Document workload analysis
 - ✅ Colour themes and dyslexia-friendly mode
-- ✅ Synthetic SUCWD data (4 linked tables) with a generator script
+- ✅ Synthetic SUCWD data (4 linked tables)
 - ✅ Error reporting and draft rating with re-planning (Ladder level 4)
 
 ---
