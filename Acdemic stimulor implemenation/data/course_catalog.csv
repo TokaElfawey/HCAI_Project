@@ -1,121 +1,121 @@
-course_id,course_name,department,credits,weekly_study_hours,prerequisites,schedule_slot,difficulty_level,reading_load,description
-CS101,Introduction to Programming,CS,3,6,None,Mon/Wed 10:00 AM,Light,Low,"Fundamentals of programming using Python, variables, loops, and basic data structures."
-CS102,Object-Oriented Programming,CS,3,7,CS101,Tue/Thu 12:00 PM,Moderate,Low,"Classes, inheritance, polymorphism, and software design principles."
-CS201,Data Structures and Algorithms,CS,4,10,CS102,Mon/Wed 8:00 AM,Heavy,Medium,"Trees, graphs, sorting algorithms, and computational complexity analysis."
-CS202,Computer Architecture,CS,3,8,CS101,Tue/Thu 2:00 PM,Moderate,Medium,"Digital logic, assembly language, processor design, and memory hierarchy."
-CS203,Database Systems,CS,3,7,CS102,Evening 6:00 PM,Moderate,Medium,"Relational database design, SQL querying, normalization, and transactions."
-CS204,Web Application Development,CS,3,6,CS101,Fri 10:00 AM,Light,Low,Frontend and backend web development using modern frameworks and APIs.
-CS301,Operating Systems,CS,4,11,"CS201, CS202",Mon/Wed 2:00 PM,Heavy,High,"Processes, threads, concurrency, memory management, and file systems."
-CS302,Software Engineering,CS,3,8,CS201,Evening 6:00 PM,Moderate,High,"Agile methodologies, requirements engineering, testing, and system architecture."
-CS303,Computer Networks,CS,3,7,CS202,Tue/Thu 10:00 AM,Moderate,Medium,"OSI model, TCP/IP protocols, routing, and network security basics."
-CS304,Human-Computer Interaction,CS,3,6,CS102,Tue/Thu 4:00 PM,Light,Medium,"User-centered design, usability testing, accessibility, and prototyping."
-CS401,Distributed Systems,CS,4,12,"CS301, CS303",Mon/Wed 4:00 PM,Heavy,High,"Fault tolerance, consensus algorithms, cloud computing, and microservices."
-CS402,Cybersecurity Principles,CS,3,8,CS303,Evening 6:00 PM,Moderate,High,"Cryptography, network defense, vulnerability assessment, and secure coding."
-CS403,Compiler Construction,CS,4,11,"CS201, CS202",Fri 1:00 PM,Heavy,Medium,"Lexical analysis, parsing, semantic analysis, and code generation."
-CS404,Senior Capstone Project I,CS,3,10,CS302,Evening 7:00 PM,Heavy,Medium,Team-based software engineering project applying full-stack and AI concepts.
-CS405,Senior Capstone Project II,CS,3,10,CS404,Evening 7:00 PM,Heavy,Medium,"Final implementation, evaluation, and defense of the senior graduation project."
-AI101,Foundations of Artificial Intelligence,AI,3,6,CS101,Tue/Thu 10:00 AM,Light,Medium,"Search algorithms, knowledge representation, and intelligent agents."
-AI201,Machine Learning Fundamentals,AI,4,10,"CS102, MATH201",Mon/Wed 12:00 PM,Heavy,Medium,"Supervised and unsupervised learning, regression, classification, and evaluation."
-AI202,Data Mining and Analytics,AI,3,7,CS203,Evening 6:00 PM,Moderate,Low,"Data preprocessing, clustering, association rules, and visual analytics."
-AI301,Deep Learning,AI,4,12,AI201,Tue/Thu 2:00 PM,Heavy,High,"Neural networks, CNNs, RNNs, transformers, and backpropagation."
-AI302,Natural Language Processing,AI,3,9,AI201,Mon/Wed 4:00 PM,Moderate,High,"Text processing, embeddings, language models, and sentiment analysis."
-AI303,Computer Vision,AI,3,9,AI201,Fri 10:00 AM,Moderate,Low,"Image processing, object detection, segmentation, and visual recognition."
-AI304,Human-AI Interaction,AI,3,6,"AI101, CS304",Evening 6:00 PM,Light,Medium,"Designing controllable, transparent, and ethical AI systems for human users."
-AI401,Reinforcement Learning,AI,4,11,AI301,Mon/Wed 8:00 AM,Heavy,High,"Markov decision processes, Q-learning, policy gradients, and multi-agent RL."
-AI402,Generative AI & LLMs,AI,3,8,AI302,Evening 7:00 PM,Moderate,Medium,"Large language models, prompt engineering, RAG architectures, and fine-tuning."
-AI403,AI Ethics and Governance,AI,2,4,AI101,Fri 2:00 PM,Light,High,"Fairness, accountability, transparency, privacy, and AI regulatory frameworks."
-MATH101,Calculus I,MATH,4,8,None,Mon/Wed 8:00 AM,Moderate,Low,"Limits, derivatives, applications of differentiation, and basic integration."
-MATH102,Calculus II,MATH,4,9,MATH101,Tue/Thu 8:00 AM,Heavy,Low,"Techniques of integration, sequences, series, and parametric equations."
-MATH103,Discrete Mathematics,MATH,3,7,None,Mon/Wed 12:00 PM,Moderate,Medium,"Logic, proofs, sets, combinatorics, and graph theory foundations."
-MATH201,Linear Algebra,MATH,3,7,MATH101,Evening 6:00 PM,Moderate,Low,"Vectors, matrices, eigenvalues, eigenvectors, and linear transformations."
-MATH202,Probability and Statistics,MATH,3,7,MATH102,Tue/Thu 12:00 PM,Moderate,Low,"Random variables, distributions, hypothesis testing, and statistical inference."
-MATH301,Numerical Methods,MATH,3,8,"MATH201, CS101",Fri 11:00 AM,Moderate,Low,"Root finding, numerical integration, interpolation, and linear system solvers."
-GEN101,Academic Writing & Communication,GEN,2,4,None,Tue/Thu 2:00 PM,Light,High,"Structuring academic papers, technical reports, and effective presentations."
-GEN102,Critical Thinking & Logic,GEN,2,3,None,Evening 5:00 PM,Light,Medium,"Evaluating arguments, identifying fallacies, and structured problem-solving."
-GEN103,Introduction to Psychology,GEN,3,5,None,Mon/Wed 2:00 PM,Light,High,"Cognitive processes, human behavior, learning, and mental well-being."
-GEN201,Project Management Basics,GEN,2,4,None,Evening 6:00 PM,Light,Low,"Planning, scheduling, risk management, and team collaboration."
-GEN202,Technical Presentation Skills,GEN,2,3,GEN101,Fri 12:00 PM,Light,Low,"Visual storytelling, public speaking, and pitching technical ideas."
-GEN203,Entrepreneurship & Innovation,GEN,3,5,None,Tue/Thu 4:00 PM,Light,Medium,"Startup ideation, business models, user validation, and product launch."
-GEN301,Research Methodology,GEN,2,5,GEN101,Evening 7:00 PM,Moderate,High,"Literature review, experimental design, data collection, and ethics."
-CS311,Mobile App Development,CS,3,7,CS102,Evening 6:00 PM,Moderate,Low,Building cross-platform mobile applications with modern UI/UX patterns.
-CS312,Cloud Computing Architecture,CS,3,8,CS303,Mon/Wed 8:00 AM,Moderate,High,"Virtualization, containers, serverless computing, and cloud deployment."
-CS313,Game Design and Development,CS,3,7,CS102,Mon/Wed 4:00 PM,Moderate,Low,"Game engines, physics simulation, rendering pipelines, and interactive storytelling."
-CS314,DevOps and CI/CD Pipelines,CS,3,7,CS302,Mon/Wed 2:00 PM,Moderate,Low,"Automated testing, continuous integration, container orchestration, and monitoring."
-CS315,Parallel & GPU Programming,CS,4,10,CS202,Evening 7:00 PM,Heavy,Low,"CUDA, OpenMP, multi-threading, and high-performance computing architectures."
-CS316,Information Retrieval,CS,3,8,CS201,Evening 6:00 PM,Moderate,High,"Search engines, indexing, ranking algorithms, and text retrieval models."
-CS317,Blockchain & Distributed Ledgers,CS,3,7,CS303,Tue/Thu 2:00 PM,Moderate,Low,"Smart contracts, cryptographic hashing, and decentralized consensus."
-CS318,Embedded Systems & IoT,CS,3,8,CS202,Tue/Thu 4:00 PM,Moderate,Medium,"Microcontrollers, sensors, real-time operating systems, and edge devices."
-CS319,Software Testing & QA,CS,3,6,CS302,Mon/Wed 8:00 AM,Moderate,Low,"Unit testing, integration testing, test automation, and quality assurance."
-CS320,UX/UI Prototyping Lab,CS,2,4,CS304,Mon/Wed 10:00 AM,Light,Low,"Hands-on wireframing, Figma prototyping, and accessibility auditing."
-AI321,Time Series Forecasting,AI,3,8,AI201,Mon/Wed 2:00 PM,Moderate,High,"ARIMA, LSTM, Prophet, and sequential data modeling."
-AI322,Explainable AI (XAI),AI,3,7,AI201,Tue/Thu 4:00 PM,Moderate,Low,"SHAP, LIME, model interpretability, and transparent decision systems."
-AI323,Conversational AI & Chatbots,AI,3,8,AI302,Tue/Thu 2:00 PM,Moderate,Low,"Dialogue management, intent recognition, and multi-turn agent workflows."
-AI324,Recommender Systems,AI,3,7,AI202,Evening 7:00 PM,Moderate,High,"Collaborative filtering, content-based filtering, and hybrid personalization."
-AI325,AI in Healthcare,AI,3,7,AI201,Evening 7:00 PM,Moderate,High,"Medical imaging analysis, clinical decision support, and health informatics."
-AI326,Robotics & Autonomous Agents,AI,4,10,AI101,Tue/Thu 10:00 AM,Heavy,Low,"Path planning, SLAM, sensor fusion, and robotic control."
-AI327,Knowledge Graphs & Semantic Web,AI,3,7,AI101,Tue/Thu 12:00 PM,Moderate,High,"Ontologies, RDF, SPARQL, and graph-based reasoning."
-AI328,Speech & Audio Processing,AI,3,9,AI301,Mon/Wed 4:00 PM,Heavy,Low,"Automatic speech recognition, voice synthesis, and acoustic modeling."
-AI329,Multi-Agent Systems,AI,3,8,AI101,Fri 10:00 AM,Moderate,Low,"Agent coordination, negotiation, game theory, and swarm intelligence."
-AI330,Applied MLOps,AI,3,8,AI201,Evening 7:00 PM,Moderate,Medium,"Model versioning, deployment pipelines, drift detection, and monitoring."
-MATH331,Graph Theory & Applications,MATH,3,7,MATH103,Tue/Thu 8:00 AM,Moderate,Medium,"Network flows, planar graphs, coloring, and combinatorial optimization."
-MATH332,Optimization Techniques,MATH,3,8,MATH201,Mon/Wed 12:00 PM,Moderate,Low,"Linear programming, convex optimization, and gradient-based solvers."
-MATH333,Cryptography & Number Theory,MATH,3,8,MATH103,Fri 10:00 AM,Moderate,Medium,"Modular arithmetic, prime numbers, RSA, and elliptic curve cryptography."
-MATH334,Stochastic Processes,MATH,3,9,MATH202,Mon/Wed 10:00 AM,Heavy,Low,"Markov chains, Poisson processes, and queueing theory."
-MATH335,Statistical Learning Theory,MATH,3,8,MATH202,Tue/Thu 10:00 AM,Moderate,Low,"Bias-variance tradeoff, VC dimension, and generalization bounds."
-GEN136,Time Management & Study Skills,GEN,2,3,None,Tue/Thu 8:00 AM,Light,Medium,"Strategies for academic productivity, stress reduction, and balanced scheduling."
-GEN137,Digital Accessibility & Inclusion,GEN,2,4,None,Tue/Thu 4:00 PM,Light,Medium,Designing inclusive digital experiences for neurodiverse and disabled users.
-GEN138,Career Readiness & Portfolio,GEN,2,3,None,Fri 10:00 AM,Light,Low,"Resume building, technical interviews, and open-source collaboration."
-GEN139,Data Visualization Storytelling,GEN,2,4,None,Evening 7:00 PM,Light,Medium,"Designing clear charts, dashboards, and accessible visual reports."
-GEN140,Ethics in Technology,GEN,2,4,None,Tue/Thu 2:00 PM,Light,Low,"Privacy, digital rights, algorithmic bias, and responsible engineering."
-CS341,Mobile App Development (Sec 2),CS,3,7,CS102,Tue/Thu 10:00 AM,Moderate,Low,Building cross-platform mobile applications with modern UI/UX patterns.
-CS342,Cloud Computing Architecture (Sec 2),CS,3,8,CS303,Tue/Thu 2:00 PM,Moderate,Medium,"Virtualization, containers, serverless computing, and cloud deployment."
-CS343,Game Design and Development (Sec 2),CS,3,7,CS102,Fri 1:00 PM,Moderate,High,"Game engines, physics simulation, rendering pipelines, and interactive storytelling."
-CS344,DevOps and CI/CD Pipelines (Sec 2),CS,3,7,CS302,Tue/Thu 4:00 PM,Moderate,Medium,"Automated testing, continuous integration, container orchestration, and monitoring."
-CS345,Parallel & GPU Programming (Sec 2),CS,4,10,CS202,Tue/Thu 4:00 PM,Heavy,Low,"CUDA, OpenMP, multi-threading, and high-performance computing architectures."
-CS346,Information Retrieval (Sec 2),CS,3,8,CS201,Evening 7:00 PM,Moderate,Low,"Search engines, indexing, ranking algorithms, and text retrieval models."
-CS347,Blockchain & Distributed Ledgers (Sec 2),CS,3,7,CS303,Mon/Wed 8:00 AM,Moderate,High,"Smart contracts, cryptographic hashing, and decentralized consensus."
-CS348,Embedded Systems & IoT (Sec 2),CS,3,8,CS202,Mon/Wed 2:00 PM,Moderate,Medium,"Microcontrollers, sensors, real-time operating systems, and edge devices."
-CS349,Software Testing & QA (Sec 2),CS,3,6,CS302,Mon/Wed 10:00 AM,Moderate,Low,"Unit testing, integration testing, test automation, and quality assurance."
-CS350,UX/UI Prototyping Lab (Sec 2),CS,2,4,CS304,Fri 1:00 PM,Light,Low,"Hands-on wireframing, Figma prototyping, and accessibility auditing."
-AI351,Time Series Forecasting (Sec 2),AI,3,8,AI201,Tue/Thu 10:00 AM,Moderate,Medium,"ARIMA, LSTM, Prophet, and sequential data modeling."
-AI352,Explainable AI (XAI) (Sec 2),AI,3,7,AI201,Tue/Thu 12:00 PM,Moderate,High,"SHAP, LIME, model interpretability, and transparent decision systems."
-AI353,Conversational AI & Chatbots (Sec 2),AI,3,8,AI302,Fri 1:00 PM,Moderate,Medium,"Dialogue management, intent recognition, and multi-turn agent workflows."
-AI354,Recommender Systems (Sec 2),AI,3,7,AI202,Mon/Wed 12:00 PM,Moderate,Medium,"Collaborative filtering, content-based filtering, and hybrid personalization."
-AI355,AI in Healthcare (Sec 2),AI,3,7,AI201,Tue/Thu 8:00 AM,Moderate,Low,"Medical imaging analysis, clinical decision support, and health informatics."
-AI356,Robotics & Autonomous Agents (Sec 2),AI,4,10,AI101,Evening 6:00 PM,Heavy,Medium,"Path planning, SLAM, sensor fusion, and robotic control."
-AI357,Knowledge Graphs & Semantic Web (Sec 2),AI,3,7,AI101,Evening 7:00 PM,Moderate,High,"Ontologies, RDF, SPARQL, and graph-based reasoning."
-AI358,Speech & Audio Processing (Sec 2),AI,3,9,AI301,Evening 6:00 PM,Heavy,Low,"Automatic speech recognition, voice synthesis, and acoustic modeling."
-AI359,Multi-Agent Systems (Sec 2),AI,3,8,AI101,Tue/Thu 4:00 PM,Moderate,High,"Agent coordination, negotiation, game theory, and swarm intelligence."
-AI360,Applied MLOps (Sec 2),AI,3,8,AI201,Mon/Wed 12:00 PM,Moderate,High,"Model versioning, deployment pipelines, drift detection, and monitoring."
-MATH361,Graph Theory & Applications (Sec 2),MATH,3,7,MATH103,Evening 7:00 PM,Moderate,Low,"Network flows, planar graphs, coloring, and combinatorial optimization."
-MATH362,Optimization Techniques (Sec 2),MATH,3,8,MATH201,Mon/Wed 12:00 PM,Moderate,Medium,"Linear programming, convex optimization, and gradient-based solvers."
-MATH363,Cryptography & Number Theory (Sec 2),MATH,3,8,MATH103,Tue/Thu 10:00 AM,Moderate,Medium,"Modular arithmetic, prime numbers, RSA, and elliptic curve cryptography."
-MATH364,Stochastic Processes (Sec 2),MATH,3,9,MATH202,Evening 6:00 PM,Heavy,High,"Markov chains, Poisson processes, and queueing theory."
-MATH365,Statistical Learning Theory (Sec 2),MATH,3,8,MATH202,Tue/Thu 2:00 PM,Moderate,Low,"Bias-variance tradeoff, VC dimension, and generalization bounds."
-GEN166,Time Management & Study Skills (Sec 2),GEN,2,3,None,Evening 6:00 PM,Light,Medium,"Strategies for academic productivity, stress reduction, and balanced scheduling."
-GEN167,Digital Accessibility & Inclusion (Sec 2),GEN,2,4,None,Fri 1:00 PM,Light,Low,Designing inclusive digital experiences for neurodiverse and disabled users.
-GEN168,Career Readiness & Portfolio (Sec 2),GEN,2,3,None,Mon/Wed 2:00 PM,Light,Low,"Resume building, technical interviews, and open-source collaboration."
-GEN169,Data Visualization Storytelling (Sec 2),GEN,2,4,None,Fri 10:00 AM,Light,Medium,"Designing clear charts, dashboards, and accessible visual reports."
-GEN170,Ethics in Technology (Sec 3),GEN,2,4,None,Tue/Thu 10:00 AM,Light,Medium,"Privacy, digital rights, algorithmic bias, and responsible engineering."
-CS371,Mobile App Development (Sec 3),CS,3,7,CS102,Mon/Wed 10:00 AM,Moderate,Low,Building cross-platform mobile applications with modern UI/UX patterns.
-CS372,Cloud Computing Architecture (Sec 3),CS,3,8,CS303,Tue/Thu 4:00 PM,Moderate,High,"Virtualization, containers, serverless computing, and cloud deployment."
-CS373,Game Design and Development (Sec 3),CS,3,7,CS102,Tue/Thu 8:00 AM,Moderate,Low,"Game engines, physics simulation, rendering pipelines, and interactive storytelling."
-CS374,DevOps and CI/CD Pipelines (Sec 3),CS,3,7,CS302,Evening 6:00 PM,Moderate,Medium,"Automated testing, continuous integration, container orchestration, and monitoring."
-CS375,Parallel & GPU Programming (Sec 3),CS,4,10,CS202,Tue/Thu 10:00 AM,Heavy,High,"CUDA, OpenMP, multi-threading, and high-performance computing architectures."
-CS376,Information Retrieval (Sec 3),CS,3,8,CS201,Tue/Thu 12:00 PM,Moderate,Low,"Search engines, indexing, ranking algorithms, and text retrieval models."
-CS377,Blockchain & Distributed Ledgers (Sec 3),CS,3,7,CS303,Mon/Wed 4:00 PM,Moderate,Low,"Smart contracts, cryptographic hashing, and decentralized consensus."
-CS378,Embedded Systems & IoT (Sec 3),CS,3,8,CS202,Mon/Wed 2:00 PM,Moderate,High,"Microcontrollers, sensors, real-time operating systems, and edge devices."
-CS379,Software Testing & QA (Sec 3),CS,3,6,CS302,Tue/Thu 2:00 PM,Moderate,High,"Unit testing, integration testing, test automation, and quality assurance."
-CS380,UX/UI Prototyping Lab (Sec 3),CS,2,4,CS304,Mon/Wed 4:00 PM,Light,High,"Hands-on wireframing, Figma prototyping, and accessibility auditing."
-AI381,Time Series Forecasting (Sec 3),AI,3,8,AI201,Tue/Thu 4:00 PM,Moderate,Medium,"ARIMA, LSTM, Prophet, and sequential data modeling."
-AI382,Explainable AI (XAI) (Sec 3),AI,3,7,AI201,Tue/Thu 4:00 PM,Moderate,Medium,"SHAP, LIME, model interpretability, and transparent decision systems."
-AI383,Conversational AI & Chatbots (Sec 3),AI,3,8,AI302,Tue/Thu 8:00 AM,Moderate,Low,"Dialogue management, intent recognition, and multi-turn agent workflows."
-AI384,Recommender Systems (Sec 3),AI,3,7,AI202,Mon/Wed 12:00 PM,Moderate,High,"Collaborative filtering, content-based filtering, and hybrid personalization."
-AI385,AI in Healthcare (Sec 3),AI,3,7,AI201,Tue/Thu 12:00 PM,Moderate,Low,"Medical imaging analysis, clinical decision support, and health informatics."
-AI386,Robotics & Autonomous Agents (Sec 3),AI,4,10,AI101,Fri 10:00 AM,Heavy,Low,"Path planning, SLAM, sensor fusion, and robotic control."
-AI387,Knowledge Graphs & Semantic Web (Sec 3),AI,3,7,AI101,Fri 1:00 PM,Moderate,Low,"Ontologies, RDF, SPARQL, and graph-based reasoning."
-AI388,Speech & Audio Processing (Sec 3),AI,3,9,AI301,Mon/Wed 12:00 PM,Heavy,High,"Automatic speech recognition, voice synthesis, and acoustic modeling."
-AI389,Multi-Agent Systems (Sec 3),AI,3,8,AI101,Mon/Wed 12:00 PM,Moderate,High,"Agent coordination, negotiation, game theory, and swarm intelligence."
-AI390,Applied MLOps (Sec 3),AI,3,8,AI201,Tue/Thu 10:00 AM,Moderate,High,"Model versioning, deployment pipelines, drift detection, and monitoring."
-MATH391,Graph Theory & Applications (Sec 3),MATH,3,7,MATH103,Mon/Wed 10:00 AM,Moderate,Medium,"Network flows, planar graphs, coloring, and combinatorial optimization."
-MATH392,Optimization Techniques (Sec 3),MATH,3,8,MATH201,Tue/Thu 10:00 AM,Moderate,High,"Linear programming, convex optimization, and gradient-based solvers."
+course_id,course_name,department,level,credits,terms_offered,weekly_study_hours,prerequisites,schedule_slot,difficulty_level,reading_load,description
+CS101,Introduction to Programming,CS,1,3,Fall/Spring,10.5,None,Fri 12:00 PM,Moderate,Low,"Introduction to Programming: Python basics, loops and data structures. A level-1 computer science course (3 credits)."
+CS102,Discrete Mathematics for Computing,CS,1,3,Fall/Spring,9.0,None,Mon/Wed 12:00 PM,Light,Medium,"Discrete Mathematics for Computing: logic, sets, proofs and counting. A level-1 computer science course (3 credits)."
+CS103,Computing and Society,CS,1,2,Fall/Spring,5.5,None,Evening 8:00 PM,Light,Low,"Computing and Society: ethics, privacy and the impact of software. A level-1 computer science course (2 credits)."
+CS104,Digital Logic Design,CS,1,3,Spring,9.0,None,Evening 5:00 PM,Light,Medium,"Digital Logic Design: gates, circuits and number systems. A level-1 computer science course (3 credits)."
+CS105,Web Development Fundamentals,CS,1,3,Fall/Spring,10.5,None,Tue/Thu 10:00 AM,Moderate,Low,"Web Development Fundamentals: HTML, CSS and basic JavaScript. A level-1 computer science course (3 credits)."
+CS201,Object-Oriented Programming,CS,2,3,Fall/Spring,10.9,CS101 AND CS103,Evening 8:00 PM,Moderate,Low,"Object-Oriented Programming: classes, inheritance and design principles. A level-2 computer science course (3 credits)."
+CS202,Data Structures,CS,2,3,Fall,10.9,CS102 AND CS103 AND (MATH101 OR MATH104),Evening 7:00 PM,Moderate,Low,"Data Structures: lists, trees, graphs and hashing. A level-2 computer science course (3 credits)."
+CS203,Computer Organization,CS,2,3,Fall,9.3,CS103 AND (MATH101 OR MATH102),Mon/Wed 8:00 AM,Light,Medium,"Computer Organization: processors, memory and assembly language. A level-2 computer science course (3 credits)."
+CS204,Databases,CS,2,3,Spring,9.3,CS104,Evening 7:00 PM,Light,Medium,"Databases: relational modelling, SQL and transactions. A level-2 computer science course (3 credits)."
+CS205,Databases Laboratory,CS,2,4,Spring,14.0,CS104 AND co-req CS204,Mon/Wed 10:00 AM,Heavy,Low,Databases Laboratory: hands-on practice that goes with Databases. A level-2 computer science course (4 credits).
+CS301,Algorithms,CS,3,3,Fall,9.6,CS201 AND CS203,Mon/Wed 2:00 PM,Moderate,Medium,"Algorithms: design, analysis and complexity. A level-3 computer science course (3 credits)."
+CS302,Operating Systems,CS,3,3,Spring,11.2,CS202,Tue/Thu 12:00 PM,Heavy,Low,"Operating Systems: processes, scheduling and file systems. A level-3 computer science course (3 credits)."
+CS303,Software Engineering,CS,3,3,Spring,11.6,CS203 AND MATH204,Mon/Wed 2:00 PM,Heavy,Low,"Software Engineering: requirements, testing and teamwork. A level-3 computer science course (3 credits)."
+CS304,Computer Networks,CS,3,3,Spring,9.6,CS204 AND MATH201,Tue/Thu 10:00 AM,Moderate,Medium,"Computer Networks: protocols, routing and network security basics. A level-3 computer science course (3 credits)."
+CS305,Computer Networks Laboratory,CS,3,4,Spring,14.5,CS204 AND MATH201 AND co-req CS304,Evening 6:00 PM,Heavy,Low,Computer Networks Laboratory: hands-on practice that goes with Computer Networks. A level-3 computer science course (4 credits).
+CS401,Machine Learning,CS,4,3,Fall,11.7,(CS301 OR CS302) AND CS304 AND (MATH202 OR MATH204),Evening 7:00 PM,Heavy,Low,"Machine Learning: supervised learning, evaluation and neural networks. A level-4 computer science course (3 credits)."
+CS402,Computer Security,CS,4,3,Fall/Spring,9.9,CS302 AND CS301,Fri 12:00 PM,Moderate,Medium,"Computer Security: threats, cryptography and secure design. A level-4 computer science course (3 credits)."
+CS403,Distributed Systems,CS,4,3,Fall,11.7,CS303 AND CS302,Tue/Thu 4:00 PM,Heavy,Low,"Distributed Systems: consensus, replication and fault tolerance. A level-4 computer science course (3 credits)."
+CS404,Human-Computer Interaction,CS,4,3,Fall/Spring,12.0,CS304 AND (MATH203 OR MATH204),Tue/Thu 10:00 AM,Heavy,Low,"Human-Computer Interaction: usability, prototyping and evaluation. A level-4 computer science course (3 credits)."
+CS405,Computer Science Capstone,CS,4,4,Spring,16.0,CS301 AND MATH204,Tue/Thu 4:00 PM,Heavy,Medium,Computer Science Capstone: a team project from proposal to demo. A level-4 computer science course (4 credits).
+ENG101,Engineering Design Fundamentals,ENG,1,3,Fall/Spring,10.9,None,Tue/Thu 10:00 AM,Moderate,Low,"Engineering Design Fundamentals: teamwork, sketching and design process. A level-1 engineering course (3 credits)."
+ENG102,Statics,ENG,1,3,Fall,9.0,None,Tue/Thu 12:00 PM,Light,Medium,"Statics: forces, equilibrium and structures. A level-1 engineering course (3 credits)."
+ENG103,Engineering Graphics,ENG,1,3,Fall/Spring,10.9,None,Evening 7:00 PM,Moderate,Low,Engineering Graphics: technical drawing and CAD basics. A level-1 engineering course (3 credits).
+ENG104,Introduction to Electrical Circuits,ENG,1,3,Fall/Spring,9.0,None,Mon/Wed 2:00 PM,Light,Medium,"Introduction to Electrical Circuits: voltage, current and basic circuits. A level-1 engineering course (3 credits)."
+ENG105,Materials Science,ENG,1,3,Fall/Spring,9.0,None,Mon/Wed 4:00 PM,Light,Medium,"Materials Science: metals, polymers and material properties. A level-1 engineering course (3 credits)."
+ENG201,Dynamics,ENG,2,3,Fall/Spring,9.3,ENG101 AND ENG104 AND MATH103,Tue/Thu 10:00 AM,Light,Medium,"Dynamics: motion, energy and momentum of bodies. A level-2 engineering course (3 credits)."
+ENG202,Thermodynamics,ENG,2,3,Spring,9.3,(ENG102 OR ENG103) AND (MATH101 OR MATH102),Mon/Wed 10:00 AM,Light,Medium,"Thermodynamics: energy, entropy and heat engines. A level-2 engineering course (3 credits)."
+ENG203,Circuit Analysis,ENG,2,3,Spring,9.3,(ENG103 OR ENG104) AND ENG101 AND MATH102,Tue/Thu 8:00 AM,Light,Medium,"Circuit Analysis: network theorems, AC circuits and filters. A level-2 engineering course (3 credits)."
+ENG204,Fluid Mechanics,ENG,2,3,Spring,9.3,ENG104 AND ENG103 AND MATH102,Mon/Wed 4:00 PM,Light,Medium,"Fluid Mechanics: fluid statics, flow and pipe systems. A level-2 engineering course (3 credits)."
+ENG205,Fluid Mechanics Laboratory,ENG,2,4,Spring,14.0,ENG104 AND ENG103 AND MATH102 AND co-req ENG204,Evening 8:00 PM,Heavy,Low,Fluid Mechanics Laboratory: hands-on practice that goes with Fluid Mechanics. A level-2 engineering course (4 credits).
+ENG301,Control Systems,ENG,3,3,Spring,9.6,ENG201 AND ENG203,Mon/Wed 12:00 PM,Moderate,Medium,"Control Systems: feedback, stability and controller design. A level-3 engineering course (3 credits)."
+ENG302,Signals and Systems,ENG,3,3,Fall,9.6,ENG202 AND ENG201 AND MATH204,Tue/Thu 12:00 PM,Moderate,Medium,Signals and Systems: Fourier analysis and system response. A level-3 engineering course (3 credits).
+ENG303,Engineering Economics,ENG,3,3,Fall/Spring,9.6,ENG203 AND ENG201 AND MATH204,Mon/Wed 2:00 PM,Moderate,Medium,Engineering Economics: cost analysis and project evaluation. A level-3 engineering course (3 credits).
+ENG304,Heat Transfer,ENG,3,3,Fall/Spring,9.6,ENG204 AND ENG202,Evening 6:00 PM,Moderate,Medium,"Heat Transfer: conduction, convection and radiation. A level-3 engineering course (3 credits)."
+ENG305,Heat Transfer Laboratory,ENG,3,4,Fall/Spring,14.5,ENG204 AND ENG202 AND co-req ENG304,Mon/Wed 12:00 PM,Heavy,Low,Heat Transfer Laboratory: hands-on practice that goes with Heat Transfer. A level-3 engineering course (4 credits).
+ENG401,Mechatronics,ENG,4,3,Fall,12.0,ENG301 AND ENG302,Mon/Wed 2:00 PM,Heavy,Low,"Mechatronics: sensors, actuators and embedded control. A level-4 engineering course (3 credits)."
+ENG402,Renewable Energy Systems,ENG,4,3,Fall/Spring,9.9,ENG302 AND ENG304 AND (MATH201 OR MATH202),Fri 10:00 AM,Moderate,Medium,"Renewable Energy Systems: solar, wind and storage design. A level-4 engineering course (3 credits)."
+ENG403,Robotics,ENG,4,3,Fall,11.7,ENG303,Mon/Wed 12:00 PM,Heavy,Low,"Robotics: kinematics, planning and robot programming. A level-4 engineering course (3 credits)."
+ENG404,Engineering Ethics and Safety,ENG,4,2,Spring,6.2,(ENG301 OR ENG304) AND MATH202,Mon/Wed 4:00 PM,Light,Medium,Engineering Ethics and Safety: professional responsibility and risk. A level-4 engineering course (2 credits).
+ENG405,Engineering Capstone,ENG,4,4,Spring,16.0,ENG301 AND (MATH203 OR MATH204),Tue/Thu 2:00 PM,Heavy,Medium,"Engineering Capstone: design, build and test a real system. A level-4 engineering course (4 credits)."
+MATH101,Calculus I,MATH,1,4,Fall/Spring,12.0,None,Evening 8:00 PM,Heavy,Medium,"Calculus I: limits, derivatives and applications. A level-1 mathematics course (4 credits)."
+MATH102,Calculus II,MATH,1,3,Fall/Spring,9.0,None,Mon/Wed 8:00 AM,Light,Medium,"Calculus II: integration, series and sequences. A level-1 mathematics course (3 credits)."
+MATH103,Linear Algebra,MATH,1,3,Fall,9.0,None,Fri 2:00 PM,Light,Medium,"Linear Algebra: vectors, matrices and eigenvalues. A level-1 mathematics course (3 credits)."
+MATH104,Introduction to Statistics,MATH,1,3,Fall/Spring,9.0,None,Mon/Wed 12:00 PM,Light,Medium,Introduction to Statistics: descriptive statistics and inference basics. A level-1 mathematics course (3 credits).
+MATH105,Mathematical Reasoning,MATH,1,2,Fall/Spring,5.5,None,Evening 8:00 PM,Light,Low,Mathematical Reasoning: proof techniques and problem solving. A level-1 mathematics course (2 credits).
+MATH201,Multivariable Calculus,MATH,2,3,Fall/Spring,9.3,(MATH101 OR MATH102),Tue/Thu 4:00 PM,Light,Medium,Multivariable Calculus: partial derivatives and multiple integrals. A level-2 mathematics course (3 credits).
+MATH202,Differential Equations,MATH,2,3,Fall,9.3,MATH102,Tue/Thu 8:00 AM,Light,Medium,Differential Equations: first and second order equations and systems. A level-2 mathematics course (3 credits).
+MATH203,Probability,MATH,2,3,Fall,9.3,(MATH103 OR MATH104),Tue/Thu 10:00 AM,Light,Medium,"Probability: random variables, distributions and expectation. A level-2 mathematics course (3 credits)."
+MATH204,Numerical Methods,MATH,2,3,Fall/Spring,10.9,MATH104 AND MATH101,Tue/Thu 8:00 AM,Moderate,Low,"Numerical Methods: root finding, interpolation and error analysis. A level-2 mathematics course (3 credits)."
+MATH205,Numerical Methods Workshop,MATH,2,2,Fall/Spring,5.8,MATH104 AND MATH101 AND co-req MATH204,Evening 7:00 PM,Light,Low,Numerical Methods Workshop: hands-on practice that goes with Numerical Methods. A level-2 mathematics course (2 credits).
+MATH301,Real Analysis,MATH,3,3,Fall,9.6,MATH201 AND MATH203,Evening 8:00 PM,Moderate,Medium,"Real Analysis: convergence, continuity and rigorous calculus. A level-3 mathematics course (3 credits)."
+MATH302,Abstract Algebra,MATH,3,3,Spring,9.6,MATH202 AND MATH203,Mon/Wed 10:00 AM,Moderate,Medium,"Abstract Algebra: groups, rings and fields. A level-3 mathematics course (3 credits)."
+MATH303,Mathematical Statistics,MATH,3,3,Fall,9.6,MATH203 AND MATH201,Fri 10:00 AM,Moderate,Medium,"Mathematical Statistics: estimation, hypothesis tests and regression. A level-3 mathematics course (3 credits)."
+MATH304,Optimization,MATH,3,3,Fall,11.2,(MATH201 OR MATH204) AND MATH201,Tue/Thu 4:00 PM,Heavy,Low,Optimization: linear programming and convex methods. A level-3 mathematics course (3 credits).
+MATH305,Optimization Workshop,MATH,3,2,Fall,6.0,(MATH201 OR MATH204) AND MATH201 AND co-req MATH304,Mon/Wed 10:00 AM,Light,Medium,Optimization Workshop: hands-on practice that goes with Optimization. A level-3 mathematics course (2 credits).
+MATH401,Complex Analysis,MATH,4,3,Spring,9.9,MATH301,Mon/Wed 12:00 PM,Moderate,Medium,Complex Analysis: analytic functions and contour integrals. A level-4 mathematics course (3 credits).
+MATH402,Topology,MATH,4,3,Fall/Spring,9.9,MATH302 AND MATH303,Evening 5:00 PM,Moderate,Medium,"Topology: open sets, continuity and compactness. A level-4 mathematics course (3 credits)."
+MATH403,Stochastic Processes,MATH,4,3,Fall,9.9,MATH303,Mon/Wed 4:00 PM,Moderate,Medium,Stochastic Processes: Markov chains and random walks. A level-4 mathematics course (3 credits).
+MATH404,Graph Theory,MATH,4,3,Spring,9.9,MATH304,Evening 8:00 PM,Moderate,Medium,"Graph Theory: paths, trees, colouring and networks. A level-4 mathematics course (3 credits)."
+MATH405,Mathematics Capstone,MATH,4,4,Fall,16.0,MATH301 AND MATH304,Tue/Thu 12:00 PM,Heavy,Medium,Mathematics Capstone: an independent research problem. A level-4 mathematics course (4 credits).
+BIO101,General Biology,BIO,1,3,Fall/Spring,9.0,None,Mon/Wed 12:00 PM,Light,Medium,"General Biology: cells, genetics and the diversity of life. A level-1 biology course (3 credits)."
+BIO102,Introduction to Ecology,BIO,1,3,Fall/Spring,9.0,None,Tue/Thu 12:00 PM,Light,Medium,"Introduction to Ecology: populations, ecosystems and conservation. A level-1 biology course (3 credits)."
+BIO103,Biology of Cells,BIO,1,3,Fall/Spring,9.0,None,Tue/Thu 12:00 PM,Light,Medium,"Biology of Cells: cell structure, membranes and energy. A level-1 biology course (3 credits)."
+BIO104,Human Anatomy Basics,BIO,1,3,Fall/Spring,9.5,None,Evening 5:00 PM,Moderate,High,Human Anatomy Basics: body systems and their organisation. A level-1 biology course (3 credits).
+BIO105,Scientific Writing for Biology,BIO,1,2,Fall/Spring,5.5,None,Evening 5:00 PM,Light,Low,Scientific Writing for Biology: reading papers and writing reports. A level-1 biology course (2 credits).
+BIO201,Genetics,BIO,2,3,Spring,9.3,BIO101 AND MATH103,Tue/Thu 12:00 PM,Light,Medium,"Genetics: inheritance, mutation and gene expression. A level-2 biology course (3 credits)."
+BIO202,Microbiology,BIO,2,3,Spring,9.3,BIO102 AND (MATH103 OR MATH104),Mon/Wed 2:00 PM,Light,Medium,"Microbiology: bacteria, viruses and infection. A level-2 biology course (3 credits)."
+BIO203,Biochemistry,BIO,2,3,Fall/Spring,9.3,BIO103 AND BIO102 AND (MATH101 OR MATH104),Mon/Wed 12:00 PM,Light,Medium,"Biochemistry: proteins, enzymes and metabolism. A level-2 biology course (3 credits)."
+BIO204,Cell Biology,BIO,2,3,Fall,9.3,BIO104 AND (MATH101 OR MATH103),Tue/Thu 2:00 PM,Light,Medium,"Cell Biology: organelles, signalling and the cell cycle. A level-2 biology course (3 credits)."
+BIO205,Cell Biology Laboratory,BIO,2,4,Fall,14.0,BIO104 AND (MATH101 OR MATH103) AND co-req BIO204,Mon/Wed 8:00 AM,Heavy,Low,Cell Biology Laboratory: hands-on practice that goes with Cell Biology. A level-2 biology course (4 credits).
+BIO301,Molecular Biology,BIO,3,3,Fall,9.6,BIO201 AND BIO204 AND (MATH201 OR MATH203),Evening 5:00 PM,Moderate,Medium,"Molecular Biology: DNA replication, transcription and translation. A level-3 biology course (3 credits)."
+BIO302,Physiology,BIO,3,3,Fall,9.6,BIO202 AND MATH204,Fri 2:00 PM,Moderate,Medium,Physiology: how organs and systems function. A level-3 biology course (3 credits).
+BIO303,Evolutionary Biology,BIO,3,3,Fall/Spring,10.2,BIO203 AND BIO201,Tue/Thu 4:00 PM,Moderate,High,"Evolutionary Biology: selection, adaptation and phylogenies. A level-3 biology course (3 credits)."
+BIO304,Immunology,BIO,3,3,Spring,9.6,BIO204 AND MATH201,Fri 12:00 PM,Moderate,Medium,Immunology: innate and adaptive immune responses. A level-3 biology course (3 credits).
+BIO305,Immunology Laboratory,BIO,3,4,Spring,14.5,BIO204 AND MATH201 AND co-req BIO304,Mon/Wed 8:00 AM,Heavy,Low,Immunology Laboratory: hands-on practice that goes with Immunology. A level-3 biology course (4 credits).
+BIO401,Neuroscience,BIO,4,3,Fall,9.9,BIO301 AND MATH203,Evening 7:00 PM,Moderate,Medium,"Neuroscience: neurons, circuits and behaviour. A level-4 biology course (3 credits)."
+BIO402,Bioinformatics,BIO,4,3,Fall,11.7,(BIO302 OR BIO303) AND BIO304 AND MATH203,Tue/Thu 12:00 PM,Heavy,Low,Bioinformatics: sequence analysis and biological databases. A level-4 biology course (3 credits).
+BIO403,Developmental Biology,BIO,4,3,Fall,9.9,(BIO303 OR BIO304) AND MATH202,Tue/Thu 8:00 AM,Moderate,Medium,Developmental Biology: embryo patterning and differentiation. A level-4 biology course (3 credits).
+BIO404,Biotechnology,BIO,4,3,Spring,9.9,BIO304 AND MATH203,Evening 6:00 PM,Moderate,Medium,"Biotechnology: cloning, CRISPR and industrial applications. A level-4 biology course (3 credits)."
+BIO405,Biology Research Capstone,BIO,4,4,Spring,16.0,(BIO301 OR BIO302),Fri 2:00 PM,Heavy,Medium,Biology Research Capstone: a supervised mini research project. A level-4 biology course (4 credits).
+BUS101,Principles of Management,BUS,1,3,Fall/Spring,9.0,None,Tue/Thu 2:00 PM,Light,Medium,"Principles of Management: planning, organising and leading teams. A level-1 business course (3 credits)."
+BUS102,Financial Accounting,BUS,1,3,Fall/Spring,9.0,None,Tue/Thu 4:00 PM,Light,Medium,"Financial Accounting: statements, ledgers and reporting. A level-1 business course (3 credits)."
+BUS103,Microeconomics,BUS,1,3,Fall/Spring,9.0,None,Evening 5:00 PM,Light,Medium,"Microeconomics: demand, supply and market structures. A level-1 business course (3 credits)."
+BUS104,Business Communication,BUS,1,2,Fall/Spring,5.5,None,Evening 8:00 PM,Light,Low,"Business Communication: emails, reports and presentations. A level-1 business course (2 credits)."
+BUS105,Introduction to Marketing,BUS,1,3,Fall,9.0,None,Tue/Thu 4:00 PM,Light,Medium,"Introduction to Marketing: segmentation, branding and the marketing mix. A level-1 business course (3 credits)."
+BUS201,Managerial Accounting,BUS,2,3,Fall,9.3,(BUS101 OR BUS102) AND BUS102,Mon/Wed 10:00 AM,Light,Medium,"Managerial Accounting: budgets, costing and decision making. A level-2 business course (3 credits)."
+BUS202,Macroeconomics,BUS,2,3,Fall,9.3,BUS102,Evening 7:00 PM,Light,Medium,"Macroeconomics: growth, inflation and fiscal policy. A level-2 business course (3 credits)."
+BUS203,Business Statistics,BUS,2,3,Spring,9.3,BUS103,Fri 2:00 PM,Light,Medium,"Business Statistics: sampling, regression and forecasting. A level-2 business course (3 credits)."
+BUS204,Marketing Research,BUS,2,3,Fall,9.3,(BUS101 OR BUS104) AND (MATH102 OR MATH104),Tue/Thu 4:00 PM,Light,Medium,"Marketing Research: surveys, experiments and consumer insight. A level-2 business course (3 credits)."
+BUS205,Marketing Research Workshop,BUS,2,2,Fall,5.8,(BUS101 OR BUS104) AND (MATH102 OR MATH104) AND co-req BUS204,Evening 7:00 PM,Light,Low,Marketing Research Workshop: hands-on practice that goes with Marketing Research. A level-2 business course (2 credits).
+BUS301,Corporate Finance,BUS,3,3,Fall/Spring,9.6,BUS201 AND BUS203,Evening 8:00 PM,Moderate,Medium,"Corporate Finance: valuation, risk and capital structure. A level-3 business course (3 credits)."
+BUS302,Operations Management,BUS,3,3,Fall/Spring,9.6,BUS202 AND BUS201,Tue/Thu 4:00 PM,Moderate,Medium,"Operations Management: process design, quality and inventory. A level-3 business course (3 credits)."
+BUS303,Organizational Behavior,BUS,3,3,Fall/Spring,10.2,(BUS203 OR BUS204),Mon/Wed 4:00 PM,Moderate,High,"Organizational Behavior: motivation, culture and group dynamics. A level-3 business course (3 credits)."
+BUS304,Business Analytics,BUS,3,3,Fall,11.2,BUS204,Tue/Thu 10:00 AM,Heavy,Low,"Business Analytics: dashboards, data cleaning and prediction. A level-3 business course (3 credits)."
+BUS305,Business Analytics Workshop,BUS,3,2,Fall,6.0,BUS204 AND co-req BUS304,Evening 5:00 PM,Light,Medium,Business Analytics Workshop: hands-on practice that goes with Business Analytics. A level-3 business course (2 credits).
+BUS401,Strategic Management,BUS,4,3,Fall,10.6,BUS301 AND MATH203,Evening 5:00 PM,Moderate,High,Strategic Management: competitive advantage and case analysis. A level-4 business course (3 credits).
+BUS402,Entrepreneurship,BUS,4,3,Fall,12.0,BUS302 AND MATH201,Mon/Wed 12:00 PM,Heavy,Low,"Entrepreneurship: ideas, business models and pitching. A level-4 business course (3 credits)."
+BUS403,Supply Chain Management,BUS,4,3,Fall,9.9,BUS303 AND MATH201,Evening 6:00 PM,Moderate,Medium,"Supply Chain Management: logistics, sourcing and distribution. A level-4 business course (3 credits)."
+BUS404,Business Ethics,BUS,4,3,Fall,10.6,BUS304 AND MATH202,Mon/Wed 4:00 PM,Moderate,High,"Business Ethics: responsibility, governance and sustainability. A level-4 business course (3 credits)."
+BUS405,Business Capstone,BUS,4,4,Spring,16.0,(BUS301 OR BUS302) AND BUS304 AND (MATH202 OR MATH203),Tue/Thu 10:00 AM,Heavy,Medium,Business Capstone: a consulting project for a case company. A level-4 business course (4 credits).
+HUM101,Introduction to Philosophy,HUM,1,3,Fall/Spring,9.5,None,Tue/Thu 10:00 AM,Moderate,High,"Introduction to Philosophy: knowledge, reality and reasoning. A level-1 humanities course (3 credits)."
+HUM102,World History,HUM,1,3,Fall/Spring,9.5,None,Tue/Thu 10:00 AM,Moderate,High,World History: major civilisations and turning points. A level-1 humanities course (3 credits).
+HUM103,Academic Writing,HUM,1,2,Fall/Spring,5.5,None,Evening 8:00 PM,Light,Low,"Academic Writing: argument, structure and citation. A level-1 humanities course (2 credits)."
+HUM104,Introduction to Literature,HUM,1,3,Fall,9.5,None,Evening 5:00 PM,Moderate,High,"Introduction to Literature: poetry, prose and drama. A level-1 humanities course (3 credits)."
+HUM105,Introduction to Linguistics,HUM,1,3,Fall,9.0,None,Mon/Wed 4:00 PM,Light,Medium,"Introduction to Linguistics: sounds, words and sentence structure. A level-1 humanities course (3 credits)."
+HUM201,Ethics,HUM,2,3,Fall,9.9,(HUM101 OR HUM102) AND HUM104,Tue/Thu 4:00 PM,Moderate,High,Ethics: major moral theories and applied cases. A level-2 humanities course (3 credits).
+HUM202,Modern History,HUM,2,3,Spring,9.9,HUM102 AND HUM103,Mon/Wed 2:00 PM,Moderate,High,"Modern History: revolutions, empires and nation states. A level-2 humanities course (3 credits)."
+HUM203,Creative Writing,HUM,2,2,Spring,5.8,(HUM103 OR HUM104),Evening 6:00 PM,Light,Low,Creative Writing: workshops in short fiction and poetry. A level-2 humanities course (2 credits).
+HUM204,Comparative Religion,HUM,2,3,Fall/Spring,9.9,(HUM101 OR HUM104),Fri 10:00 AM,Moderate,High,Comparative Religion: major traditions and how they are studied. A level-2 humanities course (3 credits).
+HUM205,Comparative Religion Workshop,HUM,2,2,Fall/Spring,5.8,(HUM101 OR HUM104) AND co-req HUM204,Evening 5:00 PM,Light,Low,Comparative Religion Workshop: hands-on practice that goes with Comparative Religion. A level-2 humanities course (2 credits).
+HUM301,Political Theory,HUM,3,3,Spring,10.2,HUM201 AND HUM204,Tue/Thu 12:00 PM,Moderate,High,"Political Theory: justice, power and the state. A level-3 humanities course (3 credits)."
+HUM302,Literary Criticism,HUM,3,3,Fall/Spring,10.2,(HUM202 OR HUM203) AND HUM201,Mon/Wed 8:00 AM,Moderate,High,Literary Criticism: schools of interpretation and close reading. A level-3 humanities course (3 credits).
+HUM303,Cultural Studies,HUM,3,3,Fall,10.2,HUM203 AND HUM201,Mon/Wed 10:00 AM,Moderate,High,"Cultural Studies: media, identity and popular culture. A level-3 humanities course (3 credits)."
+HUM304,Philosophy of Mind,HUM,3,3,Spring,10.2,HUM204 AND HUM203,Evening 5:00 PM,Moderate,High,"Philosophy of Mind: consciousness, language and cognition. A level-3 humanities course (3 credits)."
+HUM305,Philosophy of Mind Workshop,HUM,3,2,Spring,6.0,HUM204 AND HUM203 AND co-req HUM304,Evening 6:00 PM,Light,Medium,Philosophy of Mind Workshop: hands-on practice that goes with Philosophy of Mind. A level-3 humanities course (2 credits).
+HUM401,Contemporary Debates,HUM,4,2,Fall,6.2,HUM301 AND HUM303,Evening 6:00 PM,Light,Medium,Contemporary Debates: structured debate on current questions. A level-4 humanities course (2 credits).
+HUM402,Gender and Society,HUM,4,3,Fall,10.6,(HUM302 OR HUM303) AND HUM304,Mon/Wed 2:00 PM,Moderate,High,"Gender and Society: gender, institutions and social change. A level-4 humanities course (3 credits)."
+HUM403,Digital Humanities,HUM,4,3,Spring,11.7,(HUM303 OR HUM304),Mon/Wed 10:00 AM,Heavy,Low,Digital Humanities: text mining and digital archives. A level-4 humanities course (3 credits).
+HUM404,History of Ideas,HUM,4,3,Spring,10.6,(HUM301 OR HUM304),Tue/Thu 2:00 PM,Moderate,High,History of Ideas: how concepts travel across eras. A level-4 humanities course (3 credits).
+HUM405,Humanities Capstone,HUM,4,4,Spring,16.0,HUM301,Fri 12:00 PM,Heavy,Medium,Humanities Capstone: a thesis-style independent essay. A level-4 humanities course (4 credits).
