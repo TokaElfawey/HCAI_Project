@@ -106,11 +106,12 @@ Open the address Streamlit prints (usually http://localhost:8501).
 ```
 HCAI_Project/
 ├── README.md
-├── Ctrl+Z Burnout Week 2.pdf ... Week 5.pdf   # course deliverables
+├── Docs                                # Ctrl+Z Burnout Week 2.pdf ... Week 5.pdf, course deliverables
 └── Acdemic stimulor implemenation/
     ├── Dashboard.py                    # entry point (Streamlit)
     ├── course_planner.py               # drafts, prerequisites, lock/reject, undo/redo, onboarding
     ├── academic_decision_simulator.py  # weekly schedule, chat, AI proposals
+    ├── chat_guard.py                   # greeting, quick replies, safeguards, fallback replies
     ├── document_workload_analyzer.py   # OCR + workload estimate for course material
     ├── gemini_llm.py                   # Gemini API wrapper
     ├── project_theme.py                # colour themes and accessibility styling
@@ -158,7 +159,7 @@ Files created at run time (not committed): `data/feedback_log.jsonl`, `data/acad
 **Team Ctrl+Z Burnout**
 
 - [Toka Nasr](https://github.com/TokaElfawey)
-- [Aya Nasser](https://github.com/ayaah-ahmed)
+- [Aya Ahmed](https://github.com/ayaah-ahmed)
 - [Toka Alaa](https://github.com/toka-alaa)
 - [Mohamed Mostafa](https://github.com/mohamed291133)
 - [Yousif Hisham](https://github.com/YousifHisham-tech)
