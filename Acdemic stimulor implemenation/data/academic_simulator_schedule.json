@@ -1,0 +1,20 @@
+[
+  {
+    "workname": "Data structure Revision",
+    "day": "Saturday",
+    "start_hour": 9,
+    "duration_hours": 3
+  },
+  {
+    "workname": "Planning robotics Revision",
+    "day": "Monday",
+    "start_hour": 10,
+    "duration_hours": 2
+  },
+  {
+    "workname": "Algorithms Revision",
+    "day": "Tuesday",
+    "start_hour": 10,
+    "duration_hours": 2
+  }
+]

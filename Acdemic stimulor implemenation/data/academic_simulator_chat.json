@@ -1,0 +1,58 @@
+[
+  {
+    "role": "user",
+    "content": "What can you do?"
+  },
+  {
+    "role": "assistant",
+    "content": "**I can:** draft course plans from our course catalog, check prerequisites, explain a course, estimate weekly workload, and propose study sessions for your weekly schedule. You accept or cancel every proposal.\n\n**I cannot:** register you for courses, approve prerequisite waivers or credit overloads (over 18 credits), give medical, legal or personal advice, or know anything outside this synthetic course catalog. For those, please contact a human Academic Advisor.",
+    "guard": "help"
+  },
+  {
+    "role": "user",
+    "content": "What are the prerequisites of CS301?"
+  },
+  {
+    "role": "assistant",
+    "content": "**CS301: Algorithms**\n- Prerequisites: CS201 AND CS203\n- 3 credits, level 3, offered Fall\n- Meets: Mon/Wed 2:00 PM\n- Workload: about 9.6 hours/week · Moderate · reading Medium\n- Source: course_catalog.csv (synthetic data). Something looks wrong? Use \"Report an error\" on the course in the Course Planner.",
+    "guard": "catalog_lookup"
+  },
+  {
+    "role": "user",
+    "content": "Help me plan a light 12-credit semester"
+  },
+  {
+    "role": "assistant",
+    "content": "I can help you explore courses from the catalog for a 12-credit semester, but I cannot register you. \n\nRemember, you can lock preferred courses, reject unwanted ones, and rate drafts on the Course Planner page. Let me know which subjects interest you, and we can start building a draft. \n\nFor credit overloads or special exceptions, please consult a human Academic Advisor."
+  },
+  {
+    "role": "user",
+    "content": "Help me plan a light 12-credit semester"
+  },
+  {
+    "role": "assistant",
+    "content": "I can help you select 12 credits from the catalog, but I cannot register you. \n\nUse the Course Planner to lock, reject, or rate your drafts. You can also customize your display with color themes, High Contrast, Warm Cream, or dyslexia-friendly mode.\n\nSince you want 12 credits (typically four 3-credit courses), what subjects or areas would you like to explore first? For credit overloads, please consult a human Academic Advisor."
+  },
+  {
+    "role": "user",
+    "content": "Please suggest adding a two-hour study session called Planning robotics Revision on Monday from 10 AM to 12 PM. Do not change my schedule until I accept."
+  },
+  {
+    "role": "assistant",
+    "content": "I have drafted a proposal to add your study session on Monday. Your current schedule is free at that time, so there are no conflicts. \n\nRemember, all changes stay pending until you press Accept. You can also use the Course Planner page to lock, reject, or undo changes at any time.",
+    "proposal": {
+      "id": "7f8da83b36f54aebbb1351b6ac2f803f",
+      "reason": "Add a two-hour study session for Robotics Revision on Monday",
+      "operations": [
+        {
+          "action": "add",
+          "workname": "Planning robotics Revision",
+          "day": "Monday",
+          "start_time": "10:00",
+          "duration_hours": 2
+        }
+      ],
+      "status": "accepted"
+    }
+  }
+]

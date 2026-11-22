@@ -101,8 +101,10 @@ class BurnoutModel:
 
 
 class CoursePlanner:
-    def __init__(self, state_key="academic_simulator_planner", catalog_path=None, data_dir=None, feedback_path=None):
+    def __init__(self, state_key="academic_simulator_planner", catalog_path=None, data_dir=None, feedback_path=None,
+                 on_plan_accepted=None):
         self.state_key = f"{state_key}_course_planner_state"
+        self.on_plan_accepted = on_plan_accepted
         base = os.path.dirname(os.path.abspath(__file__))
         self.data_dir = data_dir or os.path.join(base, "data")
         self.catalog_path = catalog_path or os.path.join(self.data_dir, "course_catalog.csv")
@@ -446,6 +448,13 @@ class CoursePlanner:
         self._checkpoint(f"Selected {title}")
         return True
 
+    def accept_plan(self, title):
+        if not self.select_plan(title):
+            return False
+        if self.on_plan_accepted:
+            self.on_plan_accepted()
+        return True
+
     def clear_selection(self):
         if self.state["selected_plan"] is None:
             return
@@ -741,14 +750,14 @@ class CoursePlanner:
                     for course in plan:
                         self._render_course_card(course, plan_index)
                     self._render_rating(title, plan_index)
-                    if st.button(f"✅ Select {title.split(':')[0]}", key=f"{self.state_key}_select_{plan_index}", type="primary", use_container_width=True):
-                        self.select_plan(title)
-                        st.rerun()
+                    if st.button(f"✅ Accept {title.split(':')[0]}", key=f"{self.state_key}_select_{plan_index}", type="primary", use_container_width=True):
+                        if self.accept_plan(title):
+                            st.rerun()
         selected = self.state["selected_plan"]
         if selected:
             totals = self.plan_totals(selected["courses"])
             st.divider()
-            st.success(f"🎉 Draft selected: {selected['title']}. Nothing is final until reviewed by your Academic Advisor.")
+            st.success(f"✅ Plan accepted: {selected['title']}. Its courses are now shown on the Dashboard; this does not register you.")
             st.markdown(f"**Your limits:** {self.state['constraints']['max_credits']} credits, {self.state['constraints']['max_weekly_hours']} hours/week · "
                         f"**This draft:** {totals['credits']} credits, {totals['hours']:g} hours/week")
             export = {"title": selected["title"], "burnout_risk": self.plan_risk(selected["courses"]),

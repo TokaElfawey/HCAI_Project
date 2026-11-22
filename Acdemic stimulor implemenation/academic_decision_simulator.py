@@ -21,7 +21,10 @@ class AcademicDecisionSimulator:
         self.start_hour = start_hour
         self.end_hour = end_hour
         self.state_key = state_key
-        self.course_planner = CoursePlanner(state_key=f"{state_key}_planner")
+        self.course_planner = CoursePlanner(
+            state_key=f"{state_key}_planner",
+            on_plan_accepted=self._show_dashboard,
+        )
         self.schedule_key = f"{state_key}_schedule"
         self.messages_key = f"{state_key}_messages"
         data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
@@ -33,6 +36,10 @@ class AcademicDecisionSimulator:
             st.session_state[self.schedule_key] = self._load_json(self.schedule_file, [])
         if self.messages_key not in st.session_state:
             st.session_state[self.messages_key] = self._load_json(self.messages_file, [])
+
+    def _show_dashboard(self):
+        st.session_state[f"{self.state_key}_requested_page"] = "📊 Dashboard"
+
     @staticmethod
     def _load_json(path, default):
         if not os.path.exists(path):
@@ -373,6 +380,24 @@ class AcademicDecisionSimulator:
         col1.metric("Scheduled Activities", total_work)
         col2.metric("Total Hours", total_hours)
         col3.metric("Available Hours", available_hours)
+        st.divider()
+        st.subheader("📚 Accepted Course Plan")
+        accepted_plan = self.course_planner.state["selected_plan"]
+        if accepted_plan:
+            courses = accepted_plan["courses"]
+            totals = self.course_planner.plan_totals(courses)
+            st.caption(
+                f"{accepted_plan['title']} · {len(courses)} courses · {totals['credits']} credits · "
+                f"{totals['hours']:g} estimated study hours/week. This plan is not course registration."
+            )
+            for course in courses:
+                st.markdown(
+                    f"- **{course['course_id']}: {course['course_name']}** — "
+                    f"{course['credits']} credits · {course['schedule_slot']} · "
+                    f"{course['weekly_study_hours']:g} estimated study hours/week"
+                )
+        else:
+            st.info("Accept a plan in Course Planner to see its courses here.")
         st.divider()
         # Add work form
         st.subheader("➕ Add Subject or Work")
@@ -954,11 +979,15 @@ Instructions:
     # 7. MAIN WIDGET
     # ======================================================
     def render(self):
+        active_page_key = f"{self.state_key}_active_page"
+        requested_page = st.session_state.pop(f"{self.state_key}_requested_page", None)
+        if requested_page is not None:
+            st.session_state[active_page_key] = requested_page
         page = st.segmented_control(
             "Academic simulator page",
             ["📊 Dashboard", "📚 Course Planner", "💬 Chatbot"],
             default="📊 Dashboard",
-            key=f"{self.state_key}_active_page",
+            key=active_page_key,
             label_visibility="collapsed",
         )
         if page == "📊 Dashboard":
