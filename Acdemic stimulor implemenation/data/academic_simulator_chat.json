@@ -10,49 +10,55 @@
   },
   {
     "role": "user",
-    "content": "What are the prerequisites of CS301?"
+    "content": "Add a one-hour study session on Monday\nat 3 PM called Database Revision."
   },
   {
     "role": "assistant",
-    "content": "**CS301: Algorithms**\n- Prerequisites: CS201 AND CS203\n- 3 credits, level 3, offered Fall\n- Meets: Mon/Wed 2:00 PM\n- Workload: about 9.6 hours/week · Moderate · reading Medium\n- Source: course_catalog.csv (synthetic data). Something looks wrong? Use \"Report an error\" on the course in the Course Planner.",
-    "guard": "catalog_lookup"
-  },
-  {
-    "role": "user",
-    "content": "Help me plan a light 12-credit semester"
-  },
-  {
-    "role": "assistant",
-    "content": "I can help you explore courses from the catalog for a 12-credit semester, but I cannot register you. \n\nRemember, you can lock preferred courses, reject unwanted ones, and rate drafts on the Course Planner page. Let me know which subjects interest you, and we can start building a draft. \n\nFor credit overloads or special exceptions, please consult a human Academic Advisor."
-  },
-  {
-    "role": "user",
-    "content": "Help me plan a light 12-credit semester"
-  },
-  {
-    "role": "assistant",
-    "content": "I can help you select 12 credits from the catalog, but I cannot register you. \n\nUse the Course Planner to lock, reject, or rate your drafts. You can also customize your display with color themes, High Contrast, Warm Cream, or dyslexia-friendly mode.\n\nSince you want 12 credits (typically four 3-credit courses), what subjects or areas would you like to explore first? For credit overloads, please consult a human Academic Advisor."
-  },
-  {
-    "role": "user",
-    "content": "Please suggest adding a two-hour study session called Planning robotics Revision on Monday from 10 AM to 12 PM. Do not change my schedule until I accept."
-  },
-  {
-    "role": "assistant",
-    "content": "I have drafted a proposal to add your study session on Monday. Your current schedule is free at that time, so there are no conflicts. \n\nRemember, all changes stay pending until you press Accept. You can also use the Course Planner page to lock, reject, or undo changes at any time.",
+    "content": "Your schedule has a free slot on Monday at 15:00. I have drafted a proposal to add your \"Database Revision\" session. \n\nRemember, I am a simulator—you remain in full control and can accept, reject, or adjust this change using the Course Planner controls. Any schedule modifications stay pending until you approve them.",
     "proposal": {
-      "id": "7f8da83b36f54aebbb1351b6ac2f803f",
-      "reason": "Add a two-hour study session for Robotics Revision on Monday",
+      "id": "40e484c511c541f48b9e1808f8e5d325",
+      "reason": "Adding a one-hour Database Revision session on Monday afternoon.",
       "operations": [
         {
           "action": "add",
-          "workname": "Planning robotics Revision",
+          "workname": "Database Revision",
           "day": "Monday",
-          "start_time": "10:00",
-          "duration_hours": 2
+          "start_time": "15:00",
+          "duration_hours": 1
+        }
+      ],
+      "status": "cancelled"
+    }
+  },
+  {
+    "role": "user",
+    "content": "Add a one-hour study session on Monday\nat 3 PM called Database Revision."
+  },
+  {
+    "role": "assistant",
+    "content": "Your Monday schedule is free at 15:00. I have drafted a proposal to add your \"Database Revision\" session. You remain in complete control and must press Accept to apply it.",
+    "proposal": {
+      "id": "2ad41715f9cb44cc88a62a8abc8d8c23",
+      "reason": "Adding a one-hour Database Revision session on Monday afternoon.",
+      "operations": [
+        {
+          "action": "add",
+          "workname": "Database Revision",
+          "day": "Monday",
+          "start_time": "15:00",
+          "duration_hours": 1
         }
       ],
       "status": "accepted"
     }
+  },
+  {
+    "role": "user",
+    "content": "What is the weather today?"
+  },
+  {
+    "role": "assistant",
+    "content": "That's outside what I can help with. **What I can do:** draft course plans from our course catalog, check prerequisites, explain a course, estimate weekly workload, and propose study sessions for your weekly schedule. You accept or cancel every proposal. Would you like to try one of those?",
+    "guard": "out_of_scope"
   }
 ]

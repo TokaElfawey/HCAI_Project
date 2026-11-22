@@ -12,6 +12,12 @@
     "duration_hours": 2
   },
   {
+    "workname": "Database Revision",
+    "day": "Monday",
+    "start_hour": 15,
+    "duration_hours": 1
+  },
+  {
     "workname": "Algorithms Revision",
     "day": "Tuesday",
     "start_hour": 10,
