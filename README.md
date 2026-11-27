@@ -154,6 +154,51 @@ Files created at run time (not committed): `data/feedback_log.jsonl`, `data/acad
 
 ---
 
+
+---
+
+## Checkpoint – 29 November
+
+### 1. End-to-End Run
+The Academic Decision Simulator runs locally from this repository using Streamlit.
+
+To run the application:
+```bash
+pip install -r requirements.txt
+streamlit run Dashboard.py
+```
+
+**API Key:** Google Gemini API Key (optional).
+Add `GOOGLE_API_KEY=your_key_here` to a `.env` file inside the `Acdemic stimulor implemenation` folder, next to `Dashboard.py`.
+
+The main course planning features work without an API key.
+
+### 2. Main Feature – User Control and Agency
+
+Students can generate draft academic plans, then Lock or Reject courses, and use Undo/Redo to control their decisions.
+
+No suggested plan or schedule change is applied without the student's confirmation.
+
+
+### 3. Screenshots
+
+#### 1. Academic Dashboard
+The main dashboard provides an overview of the Academic Decision Simulator.
+
+![Dashboard](screenshot_dashboard.jpg)
+
+#### 2. Course Planner
+Students can generate academic draft plans and control their choices using Lock, Reject, Undo and Redo.
+
+![Course Planner](screenshot_course_planner.jpg)
+
+#### 3. Academic Assistant Chatbot
+The chatbot helps students understand courses, estimate workload and explore academic options while keeping the student in control.
+
+![Academic Assistant](screenshot_chatbot.jpg)
+
+
+
 ## Team
 
 **Team Ctrl+Z Burnout**
