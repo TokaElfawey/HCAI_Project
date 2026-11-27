@@ -185,17 +185,20 @@ No suggested plan or schedule change is applied without the student's confirmati
 #### 1. Academic Dashboard
 The main dashboard provides an overview of the Academic Decision Simulator.
 
-![Dashboard](screenshot_dashboard.jpg)
+![Dashboard](Screenshot
+/dashboard.jpg)
 
 #### 2. Course Planner
 Students can generate academic draft plans and control their choices using Lock, Reject, Undo and Redo.
 
-![Course Planner](screenshot_course_planner.jpg)
+![Course Planner](Screenshot
+/course_planner.jpg)
 
 #### 3. Academic Assistant Chatbot
 The chatbot helps students understand courses, estimate workload and explore academic options while keeping the student in control.
 
-![Academic Assistant](screenshot_chatbot.jpg)
+![Academic Assistant](Screenshot
+/chatbot.jpg)
 
 
 
